@@ -32,7 +32,7 @@ export default function IpCalculator({lang="en"}) {
     }
     setSubnet(inputValue);
   };
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const ipaddress = e.currentTarget[0].value;
     const subnetmask = e.currentTarget[1].value;

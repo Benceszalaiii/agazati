@@ -48,11 +48,15 @@ def check_perfect(n: int) -> bool:
 
 Heron képlete egy háromszög területének kiszámítására szolgál, ha mindhárom oldalának hosszát ismerjük. A képlet a következő:
 
-$K = a+b+c$
+```
 
-$S = \sqrt{K(K-a)(K-b)(K-c)}$
+s = (a+b+c)/2
 
-```py
+T = √(s(s-a)(s-b)(s-c))
+
+```
+
+```py copy
 import math
 
 def heron(a, b, c):
