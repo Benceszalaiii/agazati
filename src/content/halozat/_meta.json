@@ -1,0 +1,9 @@
+{
+  "commands": "PT Parancsok",
+  "definitions": "Definíciók",
+  "-": {
+    "type": "separator",
+    "title": "Eszközök"
+  },
+  "calculate": "Hálózat Kalkulátor"
+}

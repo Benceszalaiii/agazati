@@ -1,0 +1,87 @@
+import { Callout } from "nextra/components";
+
+# Függvények
+
+### Függvény definiálása [#def]
+
+Egy függvényt a `def` kulcsszóval definiálunk, amelyet követ a függvény neve és a paraméterek (ha vannak). A függvény törzse behúzással helyezkedik el a függvénydefiníció alatt.
+
+A példa az [f-string](/docs/hu/py/alapok/typusok#f-string) használatát mutatja, amely segítségével a `name` változó értékét helyezzük el egy stringben.
+
+```python copy
+def greet(name):
+    print(f"Hello, {name}!")
+```
+
+### **Függvények hívása** [#call]
+
+A függvényben lévő kódot végrehajtani a függvény nevének meghívásával lehet, opcionálisan argumentumokat átadva, ha a függvénynek vannak paraméterei.
+
+```python
+greet("Alice")  # Output: Hello, Alice!
+```
+
+### **Paraméterek és argumentumok** [#params]
+
+A paraméterek a függvénydefinícióban a zárójelek között felsorolt változók.
+
+Ezek a helyőrzők a függvény hívásakor kapott értékek számára. Az argumentumok a tényleges értékek, amelyeket átadunk a függvénynek a híváskor.
+
+```python copy
+def add(x, y):
+    return x + y
+
+result = add(3, 5)  # Arguments: 3, 5 | Result: 8
+```
+
+### **Visszatérési utasítás** [#return]
+
+Függvények opcionálisan visszatérhetnek egy értékkel a `return` utasítás segítségével. Ez lehetővé teszi az adatok visszaküldését a hívónak.
+
+```python copy
+def add(x, y):
+    return x + y
+
+result = add(3, 5)  # Result: 8
+```
+
+<Callout type="warning" emoji="⚠️">
+  <p>
+    Fontos megjegyezni, hogy a `return` után visszatér az értékkel, és a
+    függvény végrehajtása leáll. A fennmaradó kód nem fog lefutni.
+  </p>
+</Callout>
+
+Példa:
+
+```py {4} copy
+    def add(x, y):
+        a = x + y
+        return a
+        b = x - y  # Ez a sor már nem fog lefutni
+
+result = add(3, 5)  # Result: 8
+```
+
+### **Hatáskör** [#scope]
+
+A függvényen belül definiált változók csak a függvény hatáskörében érvényesek, és nem elérhetőek kívülről.
+
+Hasonlóképpen, a függvényen kívül definiált változók nem elérhetőek a függvényen belül, hacsak nem adjuk át őket explicit módon argumentumként, vagy deklaráljuk őket [globális változók](/docs/hu/py/alapok/variables#global)ként.
+
+```python
+def my_function():
+    x = 10
+    print(x)  # Output: 10
+
+print(x)  # Error: NameError: name 'x' is not defined
+```
+
+### Egysoros (lambda) függvények[#lambda]
+
+Lambda függvények kis, névtelen függvények, amelyeknek bármennyi argumentuma lehet, de csak egy kifejezésük van. A `lambda` kulcsszóval vannak definiálva.
+
+```py
+# Lambda function to add two numbers
+add = lambda x, y: x + y   # After the lambda keyword, we list the parameters, followed by a colon, and the expression to evaluate
+```

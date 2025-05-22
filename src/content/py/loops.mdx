@@ -1,0 +1,190 @@
+# Ciklusok
+
+Ciklusok alapvető fogalmak a programozásban, amelyek lehetővé teszik, hogy többször végrehajts egy kódblokkot. A Python támogatja a két fő típusú ciklust: a `for` ciklusokat és a `while` ciklusokat.
+
+## For ciklusok
+
+### Alap szintaxis
+
+A `for` ciklus Pythonban arra szolgál, hogy végigiteráljon egy sorozaton (például egy listán, tuple-n, szótáron, halmazon vagy sztringen).
+
+```py filename="example.py" copy
+for variable in sequence:
+    # Code block to execute
+```
+
+### Lista bejárása
+
+```py filename="example.py" copy
+fruits = ['apple', 'banana', 'cherry']
+for fruit in fruits:
+    print(fruit)  # Output each fruit in the list
+```
+
+### Sztring bejárása
+
+```py filename="example.py" copy
+for char in "hello":
+    print(char)  # Output each character in the string
+```
+
+### Szótár (dict) bejárása
+
+Amikor egy szótárat járunk be, lehetőség van a kulcsok, értékek vagy kulcs-érték párok bejárására.
+
+```py filename="example.py" copy
+my_dict = {'name': 'Alice', 'age': 25, 'city': 'New York'}
+
+# Iterate over keys
+for key in my_dict:
+    print(key)  # Output each key
+
+# Iterate over values
+for value in my_dict.values():
+    print(value)  # Output each value
+
+# Iterate over key-value pairs
+for key, value in my_dict.items():
+    print(key, value)  # Output each key-value pair
+```
+
+### `range()` használata
+
+A `range()` függvény egy számsorozatot generál, amit gyakran használnak `for` ciklusokkal.
+
+```py filename="example.py" copy
+for i in range(5):
+    print(i)  # Output numbers from 0 to 4
+
+# range(start, stop, step)
+for i in range(2, 10, 2):
+    print(i)  # Output: 2, 4, 6, 8
+```
+
+### Beágyazott For ciklusok
+
+Lehetőség van `for` ciklusokat egymásba ágyazni.
+
+```py filename="example.py" copy
+for i in range(3):
+    for j in range(2):
+        print(f"i: {i}, j: {j}")  # Output pairs of i and j
+```
+
+## While ciklusok
+
+### Alap szintaxis
+
+A `while` ciklus Pythonban ismételten végrehajt egy kódblokkot addig, amíg egy feltétel igaz.
+
+```py filename="example.py" copy
+while condition:
+    # Code block to execute
+```
+
+### Using a Condition
+
+```py filename="example.py" copy
+count = 0
+while count < 5:
+    print(count)  # Output the current value of count
+    count += 1    # Increment count by 1
+```
+
+### Végtelen ciklusok
+
+Egy olyan ciklus, ami soha nem ér véget, végtelen ciklusnak nevezhető. Vigyázz a feltétellel, hogy véletlenül ne hozz létre egyet.
+
+```py filename="example.py" copy
+while True:
+    print("This will run forever")
+    break  # Biztosítsd, hogy legyen mód a ciklus megszakítására a végtelen végrehajtás elkerülése érdekében
+```
+
+### Kilépés a ciklusból
+
+A `break` utasítást használjuk a ciklusból való korai kilépéshez.
+
+```py filename="example.py" copy
+i = 0
+while i < 10:
+    print(i)  # Output the current value of i
+    if i == 5:
+        break  # Exit the loop when i is 5
+    i += 1    # Increment i by 1
+```
+
+## Loop Control Statements
+
+### `break`
+
+Kilép a ciklusból teljesen.
+
+```py filename="example.py" copy
+for i in range(10):
+    if i == 6:
+        break  # Exit the loop when i is 6
+    print(i)  # Output the current value of i
+```
+
+### `continue`
+
+A `continue` utasítás kihagyja a ciklusban lévő kódot az aktuális iterációban, és átlép a következő iterációra.
+
+```py filename="example.py" copy
+for i in range(10):
+    if i % 2 == 0:
+        continue  # Skip the even numbers
+    print(i)  # Output the odd numbers
+```
+
+### `else` Ág
+
+Az `else` blokk akkor hajtódik végre, amikor a ciklus normálisan befejeződik (azaz nem szakítja meg a `break`).
+
+```py filename="example.py" copy
+for i in range(5):
+    print(i)  # Output the current value of i
+else:
+    print("Loop completed")  # Output after the loop completes normally
+
+# With while loop
+i = 0
+while i < 5:
+    print(i)  # Output the current value of i
+    i += 1    # Increment i by 1
+else:
+    print("While loop completed")  # Output after the loop completes normally
+```
+
+## Gyakori minták
+
+### Ciklus indexszel
+
+A `enumerate()` használatával egyszerre lehet elérni az indexet és az értéket.
+
+```py filename="example.py" copy
+fruits = ['apple', 'banana', 'cherry']
+for index, fruit in enumerate(fruits):
+    print(index, fruit)  # Output the index and the corresponding fruit
+```
+
+### Több sorozat felett iterálás
+
+A `zip()` függvény segítségével lehet egyszerre két (vagy több) sorozaton végighaladni.
+
+```py filename="example.py" copy
+names = ['Alice', 'Bob', 'Charlie']
+ages = [25, 30, 35]
+for name, age in zip(names, ages):
+    print(f"{name} is {age} years old")  # Output the name and corresponding age
+```
+
+### List Comprehensions
+
+Egy tömör módja a listák létrehozásának.
+
+```py filename="example.py" copy
+squares = [x**2 for x in range(10)]
+print(squares)  # Output: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+```

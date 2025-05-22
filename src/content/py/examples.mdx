@@ -1,0 +1,67 @@
+# Gyakori példák
+
+## Magánhangzók ellenőrzése[#vowels]
+
+A legtöbb magánhangzóval rendelkező szót szeretnéd megtalálni egy szavak listájából. A következő kódot használhatod a legtöbb magánhangzóval rendelkező szó megtalálásához.
+
+```py copy filename="check_vowels.py"
+def check_vowels(list_of_words: list[str]) -> str:
+    word_with_most = "" # Start with an empty string
+    most_vowels = 0 # Start with 0 vowels
+    for word in list_of_words:
+        current_vowels = 0 # Start with 0 vowels with each word checked
+        for letter in word:  # Check each letter in the word
+            if letter in "aáeéiíoóöőuúüű":  # If letter is a vowel
+                current_vowels += 1  # Increase the number of vowels
+        if current_vowels > most_vowels: # If the current word has more vowels than the previous one
+            word_with_most = word # Set the current word as the one with the most vowels
+            most_vowels = current_vowels
+    return word_with_most
+list_to_check: list[str] = ['Hétfő', 'Kedd', 'Szerda', "Csütörtök", "Péntek"]
+print(check_vowels(list_to_check)) # Output: "Csütörtök"
+```
+
+## Tökéletes számok[#perfect]
+
+A matematikai magyarázatért kattintson [ide](/docs/hu/py/math#perfect).
+
+Itt egy egyszerű implementáció annak ellenőrzésére, hogy egy szám tökéletes-e:
+
+````py copy filename="perfect.py" {2}
+def check_perfect(n: int) -> bool:
+    sum_of_divisors: int = 0
+    for divisor in range(1, n):
+        if n % divisor == 0:
+            sum_of_divisors += divisor
+    return sum_of_divisors
+Ha szeretnéd a kódodat sokkal hatékonyabbá tenni, akkor a következőt tedd bele
+
+```py copy filename="perfect.py" {2, 5}
+def check_perfect(n: int) -> bool:
+    if not n % 2 == 0:   # First, check if the number is even, since there are no odd perfect numbers
+        return False
+    sum_of_divisors: int = 0
+    for divisor in range(1, n//2+1): # Only go till n/2, because there cannot be a divisor larger than that
+        if n % divisor == 0:
+            sum_of_divisors += divisor
+    return sum_of_divisors
+````
+
+## Héron formula[#heron]
+
+Matematikai magyarázatért kattintson [ide](/docs/hu/py/math#heron).
+
+```py copy
+import math
+
+def heron(a, b, c):
+    s: float = (a + b + c) / 2
+    area: float = math.sqrt(s * (s - a) * (s - b) * (s - c))
+    return area
+
+# Example usage
+a: float = 3
+b: float = 4
+c: float = 5
+print(f"Area of the triangle: {heron(a, b, c)}") # Output: 6.0
+```

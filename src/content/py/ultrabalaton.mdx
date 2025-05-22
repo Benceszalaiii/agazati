@@ -1,0 +1,123 @@
+import { Steps, FileTree, Callout } from "nextra/components"
+
+# Általános sablon
+
+Lentebb látható egy általános sablon, amely a legtöbb OOP feladatra alkalmazható.
+
+Ebben a bemutatóban az `Ultrabalaton`-t fogjuk példaként használni.
+
+Először is, győződj meg róla, hogy létrehozod a fájlokat
+
+<FileTree>
+    <FileTree.Folder name=".vscode" defaultOpen>
+      <FileTree.File name="launch.json" />
+      <FileTree.File name="settings.json" />
+    </FileTree.Folder>
+    <FileTree.File name="futo.py" />
+    <FileTree.File name="main.py" />
+    <FileTree.File name="megoldas.py" />
+</FileTree>
+
+<Steps>
+
+### Hozd létre a fő fájlt
+
+Győződj meg róla, hogy importálod a `Megoldas` osztályt, és a `Futo` osztályt, ha szükséges.
+
+<Callout type="info" emoji="ℹ">Megjegyzés: A `main.py` típusdefiniálásához valószínűleg importálnod kell a `futo`-t</Callout>
+
+Használd a `mainfile` snippetet, hogy alap formátumú fő fájlt kapj
+
+```py filename="main.py" copy
+from megoldas import Megoldas
+from futo import Futo  # Ha szükséges
+
+def main() -> None:
+    megoldas: Megoldas = Megoldas("data.txt")  # Cseréld ki a data.txt fájlnevet a tényleges fájlnévre
+
+
+if __name__ == "__main__":
+    main()
+```
+
+### Hozd létre a megoldas osztályt
+
+Ne felejtsd el importálni a `Futo`-t, mivel ezzel fogsz dolgozni.
+
+Használd a `mcinit` snippetet, hogy alap `megoldas.py` fájlt kapj.
+
+```py filename="megoldas.py" copy
+from futo import Futo
+
+class Megoldas:
+    lista: list[Futo] = []
+    def __init__(self, filename: str) -> None:
+        with open(filename, "r") as file:
+            for sor in file.splitlines()[1:]:   # Hagyd ki az első sort, ha az fejléc
+                self.lista.append(Futo(sor))
+```
+
+### Hozd létre a Futo osztályt
+
+És végül, hozd létre a `futo.py` fájlt, és a Futo osztályt benne.
+
+Használd a `classinit` snippetet, hogy alap `futo.py` fájlt kapj.
+
+```py filename="futo.py" copy
+class Futo:
+    # attribútumok itt
+    def __init__(self, sor: str):
+        nev, rajtszam, nem = sor.split(";")   # Használd a megfelelő elválasztót az adatokhoz
+        self.nev = nev
+        self.rajtszam = int(rajtszam)
+        self.nem = nem
+```
+
+### Használj programozási alapelveket a feladatok megoldásához
+
+A programozási alapelvekért, [navigálj ide](/docs/hu/py/programming-principles)
+
+Segítség a fájlok írásához, [navigálj ide](/docs/hu/py/files)
+</Steps>
+
+### Hogyan gondolkodj az OOP feladatokról
+
+Amikor OOP feladatot kapsz, kövesd ezeket az általános szabályokat.
+
+#### Melyik osztályban implementáljam ezt?
+
+Ha olyan feladatot kapsz, amely egyetlen entitás adatát érinti, az adott entitást képviselő osztályban implementáld.
+
+Például, ha egy futó teljesített távját kell ellenőrizni, a `Futo` osztályban implementáld.
+
+```py filename="futo.py" copy
+class Futo:
+    teljes_tav: float = 15 # teljes táv (km)
+    megtett_tav: float = 12 # megtett táv (km)
+    def __init__(self, sor):
+        # Inicializálás itt
+    @property
+    def megtett_tav_szazalek(self) -> float:
+        # Számítsd ki a teljesített távolságot itt, egyedileg minden futóra
+        result = self.megtett_tav / self.teljes_tav * 100
+        return round(result)
+```
+
+Ha az összes futó átlagos távolságát kell kiszámítani, a `Megoldas` osztályban implementáld, mivel ott férsz hozzá az összes futóhoz.
+
+```py filename="megoldas.py" copy
+from futo import Futo
+class Megoldas:
+    lista: list[Futo]
+    def __init__(self, filename: str) -> None:
+        # Inicializálás itt
+    @property
+    def atlag(self) -> float:
+        # Használd a programozási alapelvet az átlagos távolság kiszámításához
+        result = 0
+        people = 0
+        for runner in self.lista:
+            result += runner.megtett_tav # Add hozzá minden futó távolságát
+            people += 1 # Számold az emberek számát
+        return result/people  # Add vissza az átlagos távolságot
+```

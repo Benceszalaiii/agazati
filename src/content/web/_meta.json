@@ -1,0 +1,16 @@
+{
+  "html": {
+    "title": "HTML",
+    "type": "separator"
+  },
+  "howto": "Alapesetek",
+  "input": "Input típusok",
+  "htmlvalidator": "Validátor",
+  "css-" : {
+    "title": "CSS",
+    "type": "separator"
+  },
+  "css": "Alapesetek",
+  "pseudo": "Állapot-szelektorok",
+  "cssvalidator": "Validátor"
+}

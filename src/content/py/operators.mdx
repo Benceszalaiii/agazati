@@ -1,0 +1,85 @@
+# Operátorok
+
+### Aritmetikai (matematikai) operátorok
+
+Az aritmetikai operátorokat matematikai műveletek, például összeadás, kivonás, szorzás, osztás stb. elvégzésére használják.
+
+```python
+x = 10
+y = 5
+
+addition = x + y        # Összeadás
+subtraction = x - y     # Kivonás
+multiplication = x * y  # Szorzás
+division = x / y        # Osztás
+remainder = x % y        # Modulus (az osztás maradéka)
+exponentiation = x ** y  # Hatványozás
+floor_division = x // y  # Egész osztás (lefelé kerekítés a legközelebbi egész számra)
+```
+
+### Összehasonlító operátorok
+
+Az összehasonlító operátorok értékek összehasonlítására szolgálnak. Igaz vagy hamis értéket adnak vissza a feltételtől függően.
+
+```python
+x = 10
+y = 5
+
+equal = x == y           # Egyenlő
+not_equal = x != y       # Nem egyenlő
+greater_than = x > y    # Nagyobb, mint
+less_than = x < y       # Kisebb, mint
+greater_than_or_equal = x >= y  # Nagyobb vagy egyenlő
+less_than_or_equal = x <= y      # Kisebb vagy egyenlő
+```
+
+### Logikai operátorok
+
+A logikai operátorokat feltételes utasítások összekapcsolására használjuk.
+
+```python
+x = True
+y = False
+
+logical_and = x and y   # Logikai ÉS
+logical_or = x or y     # Logikai VAGY
+logical_not = not x     # Logikai NEM
+```
+
+### Értékadó operátorok
+
+Az értékadó operátorok változókhoz való értékek rendelésére szolgálnak.
+
+```python
+x = 10
+x += 5     # x = x + 5-tel egyenértékű
+x -= 5     # x = x - 5-tel egyenértékű
+x *= 5     # x = x * 5-tel egyenértékű
+x /= 5     # x = x / 5-tel egyenértékű
+x %= 5     # x = x % 5-tel egyenértékű
+x **= 5  # x = x ** 5-tel egyenértékű
+x //= 5  # x = x // 5-tel egyenértékű
+```
+
+### Tagsági operátorok
+
+A tagsági operátorok annak ellenőrzésére szolgálnak, hogy egy objektumban szerepel-e egy adott elem.
+
+```python
+my_list = [1, 2, 3, 4, 5]
+
+is_in = 3 in my_list         # Igaz, ha az érték megtalálható a sorozatban
+is_not_in = 6 not in my_list  # Igaz, ha az érték nem található a sorozatban
+```
+
+### Azonossági operátorok
+
+Az azonossági operátorok az objektumok összehasonlítására szolgálnak, nem azt, hogy egyenlőek-e, hanem azt, hogy ténylegesen ugyanazok az objektumok-e, ugyanazon a memóriacímen.
+
+```python
+x = [1, 2, 3]
+y = [1, 2, 3]
+
+is_same = x is y           # Igaz, ha x és y ugyanaz az objektum
+is_not_same = x is not y   # Igaz, ha x és y nem ugyanaz az objektum
+```

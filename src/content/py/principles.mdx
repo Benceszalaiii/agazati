@@ -1,0 +1,250 @@
+import { Tabs } from "nextra/components";
+
+# Programozási elvek
+
+Ezen az oldalon gyakran használt algoritmusokat és programozási elveket találsz.
+
+### Összeg [#sum]
+
+<Tabs items={["Beépített", "Szekvencia", "Osztály"]}>
+<Tabs.Tab>
+Használhatod a beépített python `sum()` függvényt
+</Tabs.Tab>
+<Tabs.Tab>
+Kódrészlet neve: `algsum`
+
+Az elemek összegének kiszámítása
+
+```py filename="sum.py" copy
+def sum(elements):
+    s = 0  # Inicializáljuk az összeget
+    for element in elements: # Végigmegyünk az összes elemen a listában
+        s += element # Hozzáadjuk az összeget
+    return s  # Visszaadjuk az összeget
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+Kódrészlet neve: `classsum`
+
+Ha van egy osztály listád, például `futo`, akkor egy tulajdonság összegét szeretnéd kiszámítani.
+
+Ehhez használd a következő kódsort
+
+```py filename="sum_class.py" copy
+def sum_of_class_prop(self):  # A self-et használjuk a futo lista eléréséhez
+    result = 0
+    for member in self.list_of_class:
+        result += member.property_to_add
+    return result
+```
+
+</Tabs.Tab>
+</Tabs>
+
+### Számolás [#count]
+
+<Tabs items={["Beépített", "Szekvencia", "Osztály"]}>
+<Tabs.Tab>
+
+Használhatod a beépített python `len()` függvényt
+
+Ha azt szeretnéd megszámolni, hogy hány elem felel meg egy adott feltételnek beépítettekkel, használd a `count(*list_to_count*, key=*condition*)` függvényt
+
+Az alábbi példában látható egy `lambda` függvény, amely ellenőrzi, hogy az elem nagyobb-e, mint 5. További információk a lambda függvényekről [itt](/docs/hu/py/functions#lambda-functions) találhatók.
+
+```py
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Számoljuk meg, hány elem nagyobb 5-nél
+print(count(x, key=lambda x: x > 5))  # Kimenet: 5
+```
+
+A `key` attribútum minden elemet ellenőriz a megadott listában, és ha a feltétel teljesül, hozzáadja a számlálóhoz.
+
+Bármilyen függvényt használhatsz, amely logikai értéket ad vissza `key` attribútumként. Ügyelj arra, hogy ne hívd meg a függvényt, csak add át argumentumként.
+
+```py copy {7}
+def is_even(x):
+    if x % 2 == 0:
+        return True
+    else:
+        return False
+
+print(count(x, key=is_even))  # Kimenet: 5
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+Kódrészlet neve: `algcount`
+
+Ha meg szeretnéd számolni az elemek számát egy listában, használhatod a beépített `len()` függvényt
+
+Ha azt szeretnéd megszámolni, hogy hány elem felel meg egy adott feltételnek, használd az alábbi kódot
+
+```py filename="count.py" copy
+def count_elements(elements):
+    counter = 0  # Inicializáljuk a számláló változót, növeljük ezt az értéket, ha elemet találunk
+    for element in elements:
+        if element == 5:  # Ellenőrizzük, hogy az elem megfelel-e a feltételnek
+            counter += 1  # Növeljük a számlálót
+    return counter  # Visszaadjuk az eredményt
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+Kódrészlet neve: `classcount`
+
+```py filename="classcount.py" copy
+def count_of_class(self):
+    counter = 0
+    for member in self.list_of_class:
+        if member.property_to_check:
+            counter += 1
+    return counter
+```
+
+</Tabs.Tab>
+
+</Tabs>
+
+### Minimum [#min]
+
+A maximum az ellenkezője a minimumnak, ezért használhatod ugyanazt a kódot, csak cseréld ki az összehasonlító operátort.
+
+<Tabs items={["Beépített", "Szekvencia", "Osztály"]}>
+
+<Tabs.Tab>
+Használhatod a beépített python `min()` függvényt
+
+```py copy /0/
+x = [1, 2, 3, 4, 5, 0, 6, 7, 8, 9, 10]
+print(min(x)) # Kimenet: 0
+```
+
+</Tabs.Tab>
+
+<Tabs.Tab>
+
+Kódrészlet neve: `algmin`
+
+Ha a minimum értéket szeretnéd megkapni egy listában, használhatod a beépített `min()` függvényt
+
+A saját kódod létrehozásához használd az alábbi kódot
+
+```py filename="min.py" copy
+def min(elements):
+    current_min = elements[0] # Az első értéket használjuk aktuális minimumnak
+    for element in elements[1:]:  # Átugorjuk az első elemet, mivel már az az aktuális minimum
+        if element < current_min:  # Ellenőrizzük, hogy az elem kisebb-e, mint az aktuális minimum
+            current_min = element  # Ha igen, az aktuális minimumot beállítjuk az elem értékére
+    return current_min  # Visszaadjuk az eredményt
+```
+
+</Tabs.Tab>
+
+<Tabs.Tab>
+
+Kódrészlet neve: `classmin`
+
+Egy osztály tulajdonságának minimális értékének megszerzéséhez használd az alábbi kódot
+
+```py filename="min_class.py" copy
+def min_of_class_prop(self):  # A self-et használjuk a futo lista eléréséhez
+    result = self.list_of_class[0].property_to_check
+    for member in self.list_of_class[1:]:
+        if member.property_to_check < result:
+            result = member.property_to_check
+    return result
+```
+
+</Tabs.Tab>
+</Tabs>
+
+### Szűrés [#filter]
+
+Ahhoz, hogy csak azokat az elemeket számoljuk meg, amelyek megfelelnek egy bizonyos feltételnek, használd a [count](#count) függvényt.
+
+<Tabs items={["Beépített", "Szekvencia", "Osztály"]}>
+<Tabs.Tab>
+Használhatod a beépített python `filter()` függvényt
+
+Ahhoz, hogy megértsd, hogyan működik a `lambda`, nézd meg [itt](/docs/hu/py/functions#lambda)
+
+```py
+x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Szűrjük ki az összes elemet, amely nagyobb, mint 5
+# Az első argumentum a függvény, a második a lista
+# A függvény (első paraméter) akkor ad vissza True értéket, ha az elem meg kell tartani
+filtered = filter(lambda x: x > 5, x)  # Visszaad egy iterátor objektumot
+filtered_list = list(filtered)  # Konvertáljuk az iterátort listává
+print(filtered_list)  # Kimenet: [6, 7, 8, 9, 10]
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+Egy sorozat szűréséhez a következő kódot használhatjuk:
+
+```py filename="filter.py" copy
+def filter_elements(elements):
+    filtered = []  # Inicializálunk egy üres listát a szűrt elemek tárolására
+    for element in elements:
+        if element > 5:  # Ellenőrizzük, hogy az elem megfelel-e a feltételnek
+            filtered.append(element)  # Hozzáadjuk az elemet a listához
+    return filtered  # Visszaadjuk a szűrt listát
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+Egy osztály attribútumának szűréséhez a következő kódot kell használni:
+
+```py filename="filter_class.py" copy
+def filter_class(self, condition: str | int | float | bool): # Megadjuk a feltétel típusát
+    filtered = []  # Inicializálunk egy üres listát a szűrt elemek tárolására
+    for member in self.list_of_class: # Iter
+
+álunk az osztály összes tagján
+        if member.property_to_check == condition: # Ellenőrizzük, hogy a tulajdonság megfelel-e a feltételnek
+            filtered.append(member)  # Hozzáadjuk az elemet a listához, ha megfelel a feltételnek
+    return filtered  # Visszaadjuk a szűrt tagokat
+```
+
+</Tabs.Tab>
+</Tabs>
+
+### Rendezés [#rendezés]
+
+Az array rendezéséhez használhatod a beépített `list.sort()` metódust.
+
+Vagy implementálhatsz saját rendezési algoritmust, például az alábbiakat.
+
+Fontos megjegyezni, hogy az alábbi függvény nem hoz létre új tömböt, hanem a tömböt helyben rendezve adja vissza.
+
+Ha új listát szeretnél létrehozni, használd a `sorted(array)` függvényt.
+
+```py filename="sort.py" copy
+def bubbleSort(array):
+
+  # ciklus az egyes tömbelemek eléréséhez
+  for i in range(len(array)):
+
+    # ciklus az elemek összehasonlításához
+    for j in range(0, len(array) - i - 1):
+
+      # két szomszédos elem összehasonlítása
+      # változtasd > < jelre a csökkenő sorrendhez
+      if array[j] > array[j + 1]:
+
+        # elemek cseréje, ha nem a kívánt sorrendben vannak
+        temp = array[j]
+        array[j] = array[j+1]
+        array[j+1] = temp
+
+a = [2, 4, 5, 1, 5, -12, -23, 4]
+bubbleSort(a) # A tömb rendezése helyben
+print(a) # Kimenet: [-23, -12, 1, 2, 4, 4, 5, 5]
+```

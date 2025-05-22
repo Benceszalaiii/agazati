@@ -1,0 +1,140 @@
+import { Callout } from 'nextra/components';
+
+# Változók
+
+A változók a programozás alapvető fogalmai, és a Python egyszerű módon kezeli őket. Vizsgáljuk meg, mik a változók, hogyan kell használni őket, és néhány bevált gyakorlatot.
+
+## Mi az a változó? [#what=is]
+
+A változó egy név, amely egy értékre utal. Pythonban változót úgy hozhat létre, hogy az értékadó operátor (`=`) segítségével értéket rendel hozzá.
+
+```py filename="variables.py"
+# Példa változó létrehozására
+name = "Alice"
+age = 30
+height = 5.5
+```
+
+## Változók elnevezése
+
+A változók elnevezésekor néhány szabályt és konvenciót kell követni:
+
+- A változóneveknek betűvel vagy aláhúzással (`_`) kell kezdődniük.
+
+- A név többi része betűket, számokat vagy aláhúzásokat tartalmazhat.
+
+- A változónevek megkülönböztetik a kis- és nagybetűket (`Age` és `age` különböző változók).
+
+- Jó gyakorlat leíró neveket használni.
+
+```py filename="variables.py"
+# Érvényes változónevek
+first_name = "John"
+lastName = "Doe"
+_age = 25
+
+# Érvénytelen változónevek
+# 1st_name = "Jane"  # Számmal kezdődik
+# first-name = "John"  # Tartalmaz kötőjelet
+```
+
+## Értékek hozzárendelése
+
+Különböző [típusú](/docs/hu/py/types) értékeket rendelhet a változókhoz. A Python dinamikusan tipizált, ami azt jelenti, hogy nem kell explicit módon deklarálni egy változó típusát.
+
+```py filename="variables.py"
+# Különböző típusú értékek hozzárendelése
+message = "Hello, World!"  # Sztring
+count = 42  # Egész szám
+price = 19.99  # Lebegőpontos szám
+is_available = True  # Logikai érték
+```
+
+## Többszörös hozzárendelés
+
+A Python lehetővé teszi több változó hozzárendelését egyetlen sorban.
+
+```py filename="variables.py"
+# Többszörös hozzárendelés egy sorban
+x, y, z = 10, 20, 30
+
+# Minden változónak ugyanaz az értéke lesz
+a = b = c = 50
+```
+
+## Értékek módosítása
+
+Egy változó értéke bármikor megváltoztatható a program végrehajtása során.
+
+```py filename="variables.py"
+# Változó értékének módosítása
+color = "red"
+print(color)  # Output: red
+
+color = "blue"
+print(color)  # Output: blue
+```
+
+## Változótípusok
+
+A Pythonnak számos beépített adattípusa van. Íme néhány gyakori:
+
+- **int**: Egész számok
+
+- **float**: Lebegőpontos számok
+
+- **str**: Sztringek (szöveg)
+
+- **bool**: Logikai értékek (True vagy False)
+
+- **list**: Elemek rendezett gyűjteménye
+
+- **dict**: Kulcs-érték párok gyűjteménye
+
+Az egyes adattípusok részletes ismertetését lásd a [Python adattípusok](/docs/hu/py/types) útmutatóban.
+
+```py filename="variables.py"
+# Példák különböző adattípusokra
+number = 10  # int
+pi = 3.14  # float
+greeting = "Hello"  # str
+is_valid = True  # bool
+colors = ["red", "green", "blue"]  # list
+person = {"name": "Alice", "age": 30}  # dict
+```
+
+## Bevált gyakorlatok
+
+* Használjon leíró változóneveket, hogy a kód olvashatóbb legyen.
+
+* Ragaszkodjon egy következetes elnevezési konvencióhoz, például snake_case a változókhoz.
+
+* Kerülje a Python kulcsszavak vagy függvénynevek változóként való használatát.
+
+```py filename="variables.py"
+# Példák jó változónevekre
+total_price = 100.50
+user_name = "Charlie"
+is_logged_in = False
+```
+
+<Callout type="info" emoji="ℹ">
+
+Megjegyzés: A Python dinamikus gépelése és egyszerű szintaxisa megkönnyíti a változókkal való munkát, de mindig törekedjen a kód egyértelműségére és olvashatóságára.
+
+</Callout>
+
+## Globális/lokális változók
+
+A függvényen kívül definiált változókat globális változóknak tekintik, és a program bármely pontjáról elérhetők. Másrészt a függvényen belül definiált változók lokális változók, és csak az adott függvényen belül érhetők el.
+
+Megjegyzés: kihagyhatja a `global` kulcsszót, és továbbra is elérheti a globális változót, de ez kevésbé hatékony.
+
+```py filename="variables.py"
+x = 12  # Változó definiálása a függvényen kívül
+def my_function():
+    global x  # Globális változó elérése
+    y = 10  # Változó definiálása a függvényen belül, lokális változó, nem használható a függvényen kívül
+    print(x)  # Globális változó elérése
+    print(y)  # Lokális változó elérése
+```

@@ -1,0 +1,30 @@
+{
+    "--": {
+        "type": "separator",
+        "title": "Alapok"
+    },
+    "types": { "title": "Típusok", "theme": { "pagination": false}},
+    "variables": "Változók",
+    "operators": "Operátorok",
+    "functions": "Függvények",
+    "loops": "Ciklusok",
+    "files": "Fájlkezelés",
+    "----": {
+        "title" : "Objektum-orientáltó",
+        "type": "separator"
+    },
+    "class": "Osztályok",
+    "ultrabalaton": "Sablon",
+    "---": {
+        "type": "separator",
+        "title": "Teória"
+    },
+    "principles": "Programozási tételek",
+    "math": "Matematikai alapok",
+    "8====D": {
+        "type": "separator",
+        "title": "Gyakorlatok"
+    },
+    "generate": "Véletlen szám generálása",
+    "examples": "Példák"
+}

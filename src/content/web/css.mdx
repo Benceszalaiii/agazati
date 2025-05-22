@@ -1,0 +1,78 @@
+# CSS gyakori esetek
+
+Ez az oldal gyakori CSS eseteket tartalmaz, amelyekkel találkozhatsz.
+
+## CSS validátorok
+
+A CSS validátorok online eszközök, amelyek ellenőrzik a Cascading Style Sheets (CSS) kódodat, hogy biztosítsák a World Wide Web Consortium (W3C) által meghatározott hivatalos CSS szabványoknak való megfelelést.
+
+További információért látogassa meg a [CSS Validálása](/docs/hu/web/cssvalidator) oldalt.
+
+## Dobozmodell
+
+A CSS dobozmodell leírja az elemek elrendezését egy weboldalon. A következő összetevőkből áll:
+
+- **Tartalom:** A doboz tényleges tartalma, például szöveg vagy képek.
+- **Belső margó (padding):** A térköz a tartalom és a szegély között.
+- **Szegély (border):** A tartalmat és a belső margót körülvevő szegély.
+- **Külső margó (margin):** A térköz a szegély és a szomszédos elemek között.
+
+Íme egy példa a dobozmodell működésére:
+
+```css
+.box {
+  width: 150px;
+  height: 150px;
+
+  margin: 30px; /* Külső margó */
+  border: 5px solid lightgrey; /* Körülveszi a belső margót és a tartalmat */
+  padding: 10px; /* Belső margó */
+}
+```
+
+<div>
+  <div
+    className={"flex justify-center text-center self-center"}
+    style={{
+      width: "fit-content",
+      height: "fit-content",
+      backgroundColor: "white",
+    }}
+  >
+    <p
+      className={"p-5 bg-red-500 self-center align-center"}
+      style={{
+        padding: "15px",
+        border: "5px solid lightgrey",
+        margin: "30px",
+        backgroundColor: "grey",
+        color: "white",
+      }}
+    >
+      <span className="bg-black">Tartalom</span>
+    </p>
+  </div>
+</div>
+
+- Fekete: Tartalom
+- Szürke: Belső margó
+- Világosszürke: Szegély
+- Fehér: Külső margó
+
+## CSS betöltési sorrend
+
+Amikor több CSS fájl van linkelve egy HTML dokumentumhoz, a betöltésük sorrendje befolyásolhatja az oldal stílusát. Így működik a betöltési sorrend:
+Az utoljára importált CSS fájl felülírja az előzőleg importált fájlokból származó, ütköző stílusokat.
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="style1.css" />
+    <link rel="stylesheet" href="style2.css" />  # style2.css felülírja style1.css közös stílusait
+  </head>
+  <body>
+    <h1>Hello, World!</h1>
+  </body>
+</html>
+```

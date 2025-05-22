@@ -1,0 +1,165 @@
+# Python Osztályok Útmutatója
+
+## Bevezetés az osztályokba
+
+A Pythonban az osztályok egy módszer arra, hogy adatokat és funkcionalitást együtt csomagoljunk. Az új osztály létrehozása új típusú objektumot hoz létre, amelynek új példányai készíthetők. Minden példánynak lehetnek hozzárendelt attribútumai az állapotának fenntartásához. Az osztályoknak lehetnek metódusai is (amelyeket
+A Pythonban az osztályok egy módszer arra, hogy adatokat és funkcionalitást együtt csomagoljunk. Az új osztály létrehozása új típusú objektumot hoz létre, amelynek új példányai készíthetők. Minden példánynak lehetnek hozzárendelt attribútumai az állapotának fenntartásához. Az osztályoknak lehetnek metódusai is (amelyeket a `def` utasítás határoz meg) az állapot módosításához.
+
+## Osztály meghatározása
+
+Az osztály meghatározásához a Pythonban a `class` kulcsszót használjuk:
+
+```py filename="example.py" copy
+class MyClass:
+    pass
+```
+
+Ez létrehoz egy új osztályt, amelyet `MyClass` néven nevezünk el. A `pass` utasítás egy helyőrzőként (placeholderként) szolgál, amely azt jelzi, hogy még nincsenek attribútumok vagy metódusok definiálva.
+
+## Az `__init__` metódus
+
+Az `__init__` metódus egy speciális metódus, amely akkor hívódik meg, amikor létrehozol egy új osztály példányt. Általában az osztály példányának attribútumainak inicializálására használják.
+
+```py filename="example.py" copy
+class MyClass:
+    def __init__(self, attribute1, attribute2):
+        self.attribute1 = attribute1
+        self.attribute2 = attribute2
+```
+
+- `self` a metódus első paramétere, amely egy referenciát tartalmaz az osztály aktuális példányára.
+- `attribute1` és `attribute2` paraméterek, amelyeket a példány inicializálásakor kell megadni.
+
+### Példa
+
+```py filename="example.py" copy
+class Dog:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+dog1 = Dog("Buddy", 3)
+print(dog1.name)  # Output: Buddy
+print(dog1.age)   # Output: 3
+```
+
+## Példány metódusok
+
+A példány metódusokat az osztályon belül definiáljuk, és meghívhatók az osztály egy példányán. Minden példány metódusnak `self`-et kell tartalmaznia első paraméterként.
+
+### Példa
+
+```py filename="example.py" copy
+class Dog:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def bark(self):
+        return f"{self.name} says woof!"
+
+dog1 = Dog("Buddy", 3)
+print(dog1.bark())  # Output: Buddy says woof!
+```
+
+## `@property` metódus
+
+A `@property` dekorátor használata egy osztályban tulajdonságok definiálására szolgál. Lehetővé teszi, hogy egy metódust attribútumként használjunk.
+
+```py filename="example.py" copy
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+
+    @property
+    def area(self):
+        return 3.14 * self.radius ** 2
+circle = Circle(5)
+print(circle.area)  # Output: 78.5
+```
+
+Ahogy fent látható, az `area` függvényt nem kell zárójelekkel hívni. Azonban ez azt is jelenti, hogy nem adhatsz át argumentumokat a függvénynek (kivéve a `self`-et, amit a Python átad).
+
+### Mikor kell használni a `@property`-t?
+
+A `@property`-t akkor kell használni, ha olyan metódust szeretnél definiálni, amely úgy viselkedik mint egy attribútum. Ez hasznos lehet, ha egy értéket szeretnél kiszámítani a osztály más attribútumai alapján.
+
+Például, a `distance` méterben van megadva, de szeretnénk kilométerben megjeleníteni. Definiálhatsz egy `@property`-vel ellátott metódust, amely átalakítja a távolságot méterből kilométerbe.
+
+```py filename="example.py" copy
+class Volanbusz:
+    late: bool = True # Static attribute, meaning it won't change
+    def __init__(self, distance: float):
+        self.distance = 12000 # Distance in meters
+    @property
+    def distance_km(self) -> float:
+        return self.distance / 1000
+```
+
+## A `self` paraméter
+
+A `self` paraméter egy referencia a jelenlegi osztály példányára. Ezt használjuk az osztályhoz tartozó változókhoz való hozzáféréshez. Amikor egy metódust meghívunk egy példányon, a Python automatikusan átadja a példányt az első argumentumként.
+
+### Példa
+
+```py filename="example.py" copy
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+
+    def area(self):
+        return 3.14 * self.radius ** 2
+
+circle = Circle(5)
+print(circle.area())  # Output: 78.5
+```
+
+## Miért használjunk osztályokat?
+
+Az osztályok lehetővé teszik az adatok és a funkcionalitás együtt csomagolását. Lehetővé teszik, hogy új típusú objektumokat hozzunk létre, amelyekkel modellezhetjük a valós világot. Az osztályok segítenek a kód szervezésében és olvashatóbbá, karbantarthatóbbá tételében. Az osztályok használatával újrafelhasználható kódot hozhatsz létre, amelyet különböző részei a programodban megoszthatsz. Használhatók olyan objektumok létrehozására, amelyek ugyanazt a módszert használják, de különböző adatokkal rendelkeznek.
+
+```py filename="example.py" copy
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def greet(self):
+        return f"Hello, my name is {self.name} and I am {self.age} years old."
+gyula = Person("Gyula", 14)
+csaba = Person("Csaba", 17)
+print(gyula.greet())  # Output: Hello, my name is Gyula and I am 14 years old.
+print(csaba.greet())  # Output: Hello, my name is Csaba and I am 17 years old.
+```
+
+Láthatod, hogy mindkét objektum különböző adatokkal rendelkezik, de ugyanazt a `greet` metódust osztják meg.
+
+## Öröklődés
+
+Az öröklődés lehetővé teszi egy osztály számára, hogy attribútumokat és metódusokat örököljön egy másik osztályból. Az örökölt osztályt nevezzük szülő osztálynak, míg az öröklő osztályt nevezzük gyermek osztálynak.
+
+```py filename="example.py" copy
+class Animal:
+    def __init__(self, name):
+        self.name = name
+
+    def speak(self):
+        pass
+
+class Dog(Animal):
+    def speak(self):
+        return f"{self.name} says woof!"
+
+class Cat(Animal):
+    def speak(self):
+        return f"{self.name} says meow!"
+
+dog = Dog("Buddy")
+cat = Cat("Whiskers")
+print(dog.speak())  # Output: Buddy says woof!
+print(cat.speak())  # Output: Whiskers says meow!
+```
+
+## Következtetés
+
+A Python osztályok lehetővé teszik, hogy az adatokat és a funkciókat egy egységbe foglaljuk. Osztályok használatával új típusú objektumokat hozhatunk létre, amelyek egyetlen entitásként kezelik az adatokat és a viselkedést. Ha megértjük az osztályok alapjait, mint például a `__init__` metódus, az példánymetódusok, az osztály- és példányváltozók, valamint a gyakori speciális metódusok, akkor hatékony és újrafelhasználható kódot hozhatunk létre. Az öröklődés tovább bővíti ezt a lehetőséget azáltal, hogy lehetővé teszi hierarchikus osztálystruktúrák létrehozását.

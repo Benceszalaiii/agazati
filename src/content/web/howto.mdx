@@ -1,0 +1,41 @@
+import { Steps } from "nextra/components";
+
+# Gyakori esetek
+
+Ez az oldal számos gyakori feladatra vonatkozó útmutatót tartalmaz.
+
+<Steps>
+
+### Cím, nyelv, kódolás
+
+A `<Head>` komponensben beállíthatod a következőket, kivéve a nyelv deklarálását, amelyet az `<html>` tagban kell megtenned.
+
+Mindezek elvégzéséhez nézd meg az alábbi példát.
+
+```html copy {2, 4, 5}
+<!DOCTYPE html>
+<html lang="hu"> <!-- Az oldal nyelve -->
+  <head>
+    <meta charset="UTF-8" /> <!-- A karakterkódolás -->
+    <title>Az oldal neve</title> <!-- Az oldal neve -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/> 
+  </head>
+</html>
+```
+
+### Stílusok és szkriptek importálása
+
+A `Head` tagben a `link` és `script` tagekkel importálhatsz stílusokat és szkripteket.
+
+```html copy {5, 6}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="style.css" /> <!-- Stílus importálása -->
+    <script src="bootstrap/js/bootstrap.min.js"></script> <!-- Szkript importálása -->
+  </head>
+</html>
+```
+
+</Steps>

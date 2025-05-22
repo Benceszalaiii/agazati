@@ -1,0 +1,264 @@
+# HTML Input típusok
+
+## Szöveges bevitel
+
+A `text` input típus egy olyan egysoros szövegdobozt hoz létre, amely lehetővé teszi a felhasználók számára szöveg beírását. A `maxlength` attribútum meghatározza a megengedett maximális karakterszámot.
+
+```html copy
+<input
+  type="text"
+  name="username"
+  placeholder="Enter your username"
+  maxlength="20"
+/>
+```
+
+- **name**: A beviteli mező neve, amely a beküldés után az űrlapadatok azonosítására szolgál.
+- **placeholder**: Egy rövid tipp, amely leírja a beviteli mező elvárt értékét.
+- **maxlength**: A beviteli mezőben megengedett maximális karakterszám.
+
+## Jelszó bevitel
+
+A `password` input típus egy egysoros szövegdobozt hoz létre, amely elrejti a felhasználó által beírt karaktereket, jellemzően jelszavakhoz használják.
+
+```html copy
+<input
+  type="password"
+  name="password"
+  placeholder="Enter your password"
+  maxlength="20"
+/>
+```
+
+- **name**: A beviteli mező neve, amely a beküldés után az űrlapadatok azonosítására szolgál.
+- **placeholder**: Egy rövid tipp, amely leírja a beviteli mező elvárt értékét.
+- **maxlength**: A beviteli mezőben megengedett maximális karakterszám.
+
+## Email bevitel
+
+Az `email` input típus e-mail cím megadására szolgál. Biztosítja, hogy a bevitt érték érvényes e-mail formátum legyen.
+
+```html copy
+<input type="email" name="email" placeholder="Enter your email" />
+```
+
+- **name**: A beviteli mező neve, amely a beküldés után az űrlapadatok azonosítására szolgál.
+- **placeholder**: Egy rövid tipp, amely leírja a beviteli mező elvárt értékét.
+
+## Szám bevitel
+
+A `number` input típus numerikus bevitelre szolgál, opcionális korlátozásokkal, mint a `min`, `max` és `step`.
+
+```html copy
+<input type="number" name="age" min="1" max="100" step="1" />
+```
+
+- **name**: A beviteli mező neve, amely a beküldés után az űrlapadatok azonosítására szolgál.
+- **min**: A beviteli mezőben megengedett minimális érték.
+- **max**: A beviteli mezőben megengedett maximális érték.
+- **step**: Az érvényes beviteli értékek közötti lépésköz.
+
+## Dátum bevitel
+
+A `date` input típus lehetővé teszi a felhasználók számára, hogy egy dátumot válasszanak ki egy dátumválasztóból.
+
+```html copy
+<input type="date" name="birthday" min="1900-01-01" max="2023-12-31" />
+```
+
+- **name**: A beviteli mező neve, amely a beküldés után az űrlapadatok azonosítására szolgál.
+- **min**: A megengedett legkisebb dátum.
+- **max**: A megengedett legnagyobb dátum.
+
+## Rádiógomb
+
+A `radio` input típus lehetővé teszi a felhasználók számára, hogy egy lehetőséget válasszanak ki egy előre meghatározott készletből. Az összes rádiógomb, amelynek ugyanaz a `name` attribútuma, egy csoportba kerül.
+
+```html copy
+<label> <input type="radio" name="gender" value="male" /> Férfi </label>
+<label> <input type="radio" name="gender" value="female" /> Nő </label>
+```
+
+- **name**: A beviteli mező neve, amely a rádió gombok csoportosítására szolgál.
+- **value**: A rádiógomb kiválasztásakor elküldött érték.
+
+## Checkbox
+
+A `checkbox` input típus lehetővé teszi a felhasználók számára, hogy egy vagy több lehetőséget válasszanak ki egy előre meghatározott készletből.
+
+```html copy
+<label> <input type="checkbox" name="hobby" value="reading" /> Olvasás </label>
+<label> <input type="checkbox" name="hobby" value="sports" /> Sport </label>
+```
+
+- **name**: A beviteli mező neve, amely a beküldés után az űrlapadatok azonosítására szolgál.
+- **value**: A jelölőnégyzet bejelölésekor elküldött érték.
+
+## Legördülő lista
+
+A `select` elem egy legördülő listát hoz létre a felhasználó számára választható lehetőségekkel. Az `option` elemek határozzák meg a rendelkezésre álló lehetőségeket.
+
+```html copy
+<select name="country">
+  <option value="usa">Egyesült Államok</option>
+  <option value="canada">Kanada</option>
+  <option value="mexico">Mexikó</option>
+</select>
+```
+
+- **name**: A beviteli mező neve, amely a beküldés után az űrlapadatok azonosítására szolgál.
+- **option**: Minden egyes opció a legördülő listában, `value` attribútummal, amely a beküldött értéket jelöli.
+
+## Szövegterület
+
+A `textarea` elem lehetővé teszi a felhasználók számára, hogy több soros szöveget írjanak be.
+
+```html copy
+<textarea
+  name="message"
+  rows="4"
+  cols="50"
+  placeholder="Enter your message"
+></textarea>
+```
+
+- **name**: A beviteli mező neve, amely a beküldés után az űrlapadatok azonosítására szolgál.
+- **rows**: A látható szövegsorok száma.
+- **cols**: A szövegterület látható szélessége.
+- **placeholder**: Egy rövid tipp, amely leírja a beviteli mező elvárt értékét.
+
+## Fájlbevitel
+
+A `file` input típus lehetővé teszi a felhasználók számára fájlok feltöltését.
+
+```html copy
+<input type="file" name="resume" />
+```
+
+- **name**: A beviteli mező neve, amely a beküldés után az űrlapadatok azonosítására szolgál.
+
+## Tartomány (Range) bevitel
+
+A `range` input típus egy csúszkát hoz létre egy érték kiválasztásához egy meghatározott tartományból.
+
+```html copy
+<input type="range" name="volume" min="0" max="100" />
+```
+
+- **name**: A beviteli mező neve, amely a beküldés után az űrlapadatok azonosítására szolgál.
+- **min**: A beviteli mezőben megengedett minimális érték.
+- **max**: A beviteli mezőben megengedett maximális érték.
+
+## Színbevitel
+
+A `color` input típus lehetővé teszi a felhasználók számára szín kiválasztását.
+
+```html copy
+<input type="color" name="favcolor" />
+```
+
+- **name**: A beviteli mező neve, amely a beküldés után az űrlapadatok azonosítására szolgál.
+
+## URL bevitel
+
+Az `url` input típus URL megadására szolgál. Biztosítja, hogy a bevitt érték érvényes URL formátum legyen.
+
+```html copy
+<input type="url" name="homepage" placeholder="Enter your website URL" />
+```
+
+- **name**: A beviteli mező neve, amely a beküldés után az űrlapadatok azonosítására szolgál.
+- **placeholder**: Egy rövid tipp, amely leírja a beviteli mező elvárt értékét.
+
+## Telefonszám bevitel
+
+A `tel` input típus telefonszám megadására szolgál, alapvető ellenőrzéssel a telefonszám formátumokra vonatkozóan.
+
+```html copy
+<input type="tel" name="phone" placeholder="Enter your phone number" />
+```
+
+- **name**: A beviteli mező neve, amely a beküldés után az űrlapadatok azonosítására szolgál.
+- **placeholder**: Egy rövid tipp, amely leírja a beviteli mező elvárt értékét.
+
+## Küldés gomb
+
+A `submit` input típus egy gombot hoz létre, amely elküldi az űrlap adatait a szervernek.
+
+```html copy
+<input type="submit" value="Submit" />
+```
+
+- **value**: A küldés gombon megjelenített szöveg.
+
+## Visszaállítás gomb
+
+A `reset` input típus egy gombot hoz létre, amely visszaállítja az összes űrlapmezőt az eredeti értékeire.
+
+```html copy
+<input type="reset" value="Reset" />
+```
+
+- **value**: A visszaállítás gombon megjelenített szöveg.
+
+# Példa űrlap különböző beviteli típusok használatával
+
+Az alábbiakban egy példa űrlapot láthatunk, amely több beviteli típust használ, hogy bemutassa azok használatát:
+
+```html copy
+<form action="/submit" method="post">
+  <fieldset>
+    <legend>Személyes adatok</legend>
+    <label for="name">Név:</label>
+    <input type="text" id="name" name="name" /><br />
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" /><br />
+  </fieldset>
+
+  <fieldset>
+    <legend>Fiók adatok</legend>
+    <label for="username">Felhasználónév:</label>
+    <input type="text" id="username" name="username" maxlength="20" /><br />
+    <label for="password">Jelszó:</label>
+    <input type="password" id="password" name="password" maxlength="20" /><br />
+  </fieldset>
+  <label for="country">Ország:</label>
+  <select id="country" name="country">
+    <option value="usa">Egyesült Államok</option>
+
+    <option value="canada">Kanada</option>
+
+    <option value="mexico">Mexikó</option></select
+  ><br />
+
+  <label for="message">Üzenet:</label>
+  <textarea
+    id="message"
+    name="message"
+    rows="4"
+    cols="50"
+    placeholder="Írd be az üzeneted"
+  ></textarea
+  ><br />
+
+  <label for="resume">Önéletrajz feltöltése:</label>
+  <input type="file" id="resume" name="resume" /><br />
+
+  <label for="volume">Hangerő:</label>
+  <input type="range" id="volume" name="volume" min="0" max="100" /><br />
+
+  <label for="favcolor">Kedvenc szín:</label>
+  <input type="color" id="favcolor" name="favcolor" /><br />
+
+  <label for="homepage">Honlap:</label>
+  <input type="url" id="homepage" name="homepage" /><br />
+
+  <label for="phone">Telefonszám:</label>
+  <input type="tel" id="phone" name="phone" /><br />
+
+  <button type="submit">Küldés</button>
+  <button type="reset">Visszaállítás</button>
+</form>
+```
+
+Ez a példa bemutatja, hogyan kombinálhatók a különböző beviteli típusok, beleértve az olyan attribútumokat, mint a `maxlength`, `min`, `max`, valamint a visszaállítás gomb, hogy átfogó és felhasználóbarát űrlapot hozzunk létre.

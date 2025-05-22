@@ -1,0 +1,116 @@
+import { Steps } from "nextra/components";
+
+# Matematika a Pythonban
+
+<Steps>
+
+### Tökéletes számok[#perfect]
+
+A tökéletes számok olyan pozitív egész számok, amelyek megegyeznek a valódi osztóik összegével (a számot magát kivéve). Például a 6 tökéletes szám, mert valódi osztói 1, 2 és 3, és 1 + 2 + 3 = 6.
+
+#### Az első 5 tökéletes szám:
+
+Ellenőrizheted, hogy a programod kimenete megegyezik-e a következő eredményekkel:
+
+- 6
+- 28
+- 496
+- 8128
+- 33550336
+
+#### Hogyan ellenőrizzük, hogy egy szám tökéletes-e
+
+Íme egy egyszerű implementáció annak ellenőrzésére, hogy egy szám tökéletes-e:
+
+```py copy filename="perfect.py" {2}
+def check_perfect(n: int) -> bool:
+    sum_of_divisors: int = 0
+    for divisor in range(1, n):
+        if n % divisor == 0:
+            sum_of_divisors += divisor # Adjuk hozzá a valódi osztókat, ha a szám osztható velük
+    return sum_of_divisors == n # Megnézzük, hogy a szám egyenlő-e a valódi osztók összegével
+```
+
+Ha hatékonyabbá szeretnéd tenni a kódod, akkor a következőket illeszd be:
+
+```py copy filename="perfect.py" {2, 5}
+def check_perfect(n: int) -> bool:
+    if not n % 2 == 0:  # Először ellenőrizzük, hogy a szám páros-e, mivel nincsenek páratlan tökéletes számok
+        return False
+    sum_of_divisors: int = 0
+    for divisor in range(1, n//2+1): # Csak n/2-ig megyünk, mert nem lehet nagyobb osztó ennél
+        if n % divisor == 0:
+            sum_of_divisors += divisor
+    return sum_of_divisors == n # Megnézzük, hogy a szám egyenlő-e a valódi osztók összegével
+```
+
+### Héron formula[#heron]
+
+Heron képlete egy háromszög területének kiszámítására szolgál, ha mindhárom oldalának hosszát ismerjük. A képlet a következő:
+
+$K = a+b+c$
+
+$S = \sqrt{K(K-a)(K-b)(K-c)}$
+
+```py
+import math
+
+def heron(a, b, c):
+    s: float = (a + b + c) / 2
+    area: float = math.sqrt(s * (s - a) * (s - b) * (s - c))
+    return area
+
+# Példa
+a: float = 3
+b: float = 4
+c: float = 5
+print(f"Háromszög területe: {heron(a, b, c)}") # Kimenet: 6.0
+```
+
+### Prímszámok[#prime]
+
+A prímszámok olyan számok, amelyek csak 1-gyel és önmagukkal oszthatók. A 2 az egyetlen páros prímszám. Az 1 nem prímszám.
+
+Egy szám prím mivoltának ellenőrzéséhez használd a következő kódrészletet:
+
+```py
+def check_prime(n: int) -> bool:
+    if n < 2:
+        return False
+    if n % 2 == 0:  # Ellenőrizzük, hogy a szám páros-e
+        check_till = n//2 + 1  # Ha a szám páros, csak ellenőrizzük a számot n/2-ig
+    else:  # Ha a szám páratlan, ellenőrizzük a négyzetgyökig
+        check_till = n**0.5 + 1  # n**0.5 a szám négyzetgyöke
+    for i in range(2, check_till):  # Iterálunk az összes számon 2-től n**0.5 vagy n/2-ig
+        if n % i == 0:  # Ha n osztható i-vel, akkor nem prímszám
+            return False
+    return True  # Ha a ciklus végrehajtódik visszatérés nélkül, akkor a szám prímszám
+```
+
+Csak addig ellenőrizzük a szám négyzetgyökéig, mert ha egy számnak van osztója, ami nagyobb, mint a négyzetgyöke, akkor annak is kell lennie olyan osztójának, ami kisebb, mint a négyzetgyöke. Például, ha a 100-nak van olyan osztója, ami nagyobb, mint 10, akkor annak is kell lennie olyan osztójának, ami kisebb, mint 10.
+
+```py copy
+def get_primes(n: int) -> list[int]:
+    primes: list[int] = []  # Minden prímszámot ebben a listában tárolunk
+    for i in range(2, n+1):  # Iterálunk 2-től n-ig
+        if check_prime(i):  # Ellenőrizzük, hogy a szám prím-e
+            primes.append(i)  # Ha prím, hozzáadjuk a listához
+    return primes  # Visszaadjuk a prímszámok listáját
+```
+
+### Legnagyobb közös osztó (LNKO) [#gcd]
+
+A két szám legnagyobb közös osztójának kiszámításához használhatod az alábbi kódrészletet.
+Az euklideszi kivonásos algoritmus azon az alapon működik, hogy két szám legnagyobb közös osztója nem változik, ha a nagyobb számot kivesszük a különbségével a kisebb számnak. Ez a folyamat addig ismétlődik, amíg a két szám egyenlővé válik. Az euklideszi algoritmus hatékony nagy számok esetén.
+
+```py
+def gcd(a, b):
+    while a != b: # A kisebb számot vonjuk ki a nagyobb számból, amíg nem lesznek egyenlőek
+        if a > b: # Ha a nagyobb, mint b, vonjuk ki b-t a-ból
+            a -= b
+        else:     # Ha b nagyobb, mint a, vonjuk ki a-t b-ből
+            b -= a
+    return a  # Visszaadjuk a legnagyobb közös osztót (a vagy b, mivel ebben a pontban egyenlőek lesznek)
+```
+
+</Steps>

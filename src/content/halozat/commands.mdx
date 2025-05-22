@@ -1,0 +1,270 @@
+# Cisco konfigurációs dokumentáció
+
+Ez a dokumentum átfogó útmutatóként szolgál a Cisco kapcsolók és routerek konfigurálásához, részletezve a hálózati eszközök kezeléséhez szükséges általános parancsokat és konfigurációkat. A dokumentum kitér a hostname, jelszavak, távoli hozzáférés, VLAN-ok, interfészek, statikus routing és egyéb konfigurációkra.
+
+## Konfigurációs mód megnyitása
+
+```plaintext copy
+Switch enable // vagy en
+Switch# configure terminal // vagy conf t
+Switch(config)#    <-- Most konfigurációs módban vagy
+```
+
+## Switch konfiguráció
+
+### Hostnév beállítása[#hostname]
+
+```plaintext copy
+Switch(config)# hostname S1
+```
+- **Magyarázat**: A készülék hostnevét `S1`-re állítja az egyszerűbb azonosítás érdekében.
+
+### Konzol és VTY jelszavak beállítása
+
+```plaintext copy
+Switch(config)# line con 0
+Switch(config-line)# password cisco
+Switch(config-line)# login
+
+Switch(config)# line vty 0 15
+Switch(config-line)# password cisco
+Switch(config-line)# login
+```
+- **Magyarázat**: Jelszavak beállítása a konzol és a virtuális terminál (VTY) vonalakhoz a helyi és távoli hozzáférés biztosítása érdekében.
+  - `line con 0`: Belép a konzol vonal konfigurációs módba.
+  - `password cisco`: A jelszót `cisco`-ra állítja.
+  - `login`: Engedélyezi a jelszó ellenőrzését bejelentkezéskor.
+  - `line vty 0 15`: Belép a VTY vonal konfigurációs módba a 0-15. vonalakhoz.
+
+### Jelszavak engedélyezése (titkosítatlan és titkosított)
+
+```plaintext copy
+S1(config)# enable password class  // titkosítatlan jelszó
+S1(config)# enable secret class    // titkosított jelszó
+```
+- **Magyarázat**: Beállítja a privileged EXEC mód engedélyezési jelszavát.
+  - `enable password class`: Titkosítatlan engedélyezési jelszót állít be.
+  - `enable secret class`: Titkosított engedélyezési jelszót állít be (ajánlott módszer).
+
+### Összes egyszerű szöveges jelszó titkosítása
+
+```plaintext copy
+S1(config)# service password-encryption
+```
+- **Magyarázat**: Titkosítja az összes egyszerű szöveges jelszót a konfigurációs fájlban a fokozott biztonság érdekében.
+
+### Bejelentkezés blokkolás és jelszó biztonság beállítása
+
+```plaintext copy
+S1(config)# login block-for x attempts y within z
+S1(config)# security passwords min-length x
+```
+- **Magyarázat**: Javítja a bejelentkezés biztonságát.
+  - `login block-for x attempts y within z`: Blokkolja a bejelentkezési kísérleteket `x` másodpercre, ha `y` sikertelen kísérlet történik `z` másodpercen belül.
+  - `security passwords min-length x`: Kikényszeríti a jelszavak minimális hosszát `x` karakterre.
+
+### Felügyeleti interfész beállítása távoli hozzáféréshez
+
+```plaintext copy
+S1(config)# interface vlan 1
+S1(config-if)# ip address 192.168.0.2 255.255.255.0
+S1(config-if)# no shutdown
+```
+- **Magyarázat**: Felügyeleti IP-cím beállítása a VLAN 1-en a távoli hozzáféréshez.
+  - `interface vlan 1`: Belép az interfész konfigurációs módba a VLAN 1-hez.
+  - `ip address 192.168.0.2 255.255.255.0`: Hozzárendeli az IP-címet és az alhálózati maszkot.
+  - `no shutdown`: Aktiválja az interfészt.
+
+### Alapértelmezett átjáró beállítása
+
+```plaintext copy
+S1(config)# ip default-gateway 192.168.0.1
+```
+- **Magyarázat**: Beállítja a switch alapértelmezett átjáróját, lehetővé téve a kommunikációt más hálózatokon lévő eszközökkel.
+
+### Nap üzenet banner beállítása
+
+```plaintext copy
+S1(config)# banner motd @Warning Message@
+```
+- **Magyarázat**: Beállít egy nap üzenet (MOTD) bannert, amely figyelmeztető üzeneteket jelenít meg bejelentkezéskor.
+  - `@Warning Message@`: A figyelmeztető üzenet szövegét `@` karakterek közé kell zárni.
+
+### Interfész leírás hozzáadása
+
+```plaintext copy
+S1(config)# interface vlan 1
+S1(config-if)# description admin_telnet
+```
+- **Magyarázat**: Leírást ad az interfészhez az egyszerűbb azonosítás érdekében.
+  - `description admin_telnet`: A leírást `admin_telnet`-re állítja.
+
+### Konfiguráció mentése
+
+```plaintext copy
+S1# copy running-config startup-config
+```
+- **Magyarázat**: Elmenti az aktuális futó konfigurációt az indítási konfigurációba, hogy a változások újraindítás után is megmaradjanak.
+
+### Konfiguráció és interfész információk megjelenítése
+
+```plaintext copy
+S1# show running-config
+S1# show startup-config
+S1# show ip interface brief
+S1# ping <destination_ip>
+```
+- **Magyarázat**: Különböző konfigurációs és állapotinformációkat jelenít meg.
+  - `show running-config`: Megjeleníti az aktuális futó konfigurációt.
+  - `show startup-config`: Megjeleníti a mentett indítási konfigurációt.
+  - `show ip interface brief`: Összefoglalót ad az interfész IP-címeiről és állapotairól.
+  - `ping <destination_ip>`: Teszteli a kapcsolatot a megadott IP-címmel.
+
+### SSH beállítása távoli hozzáféréshez
+
+```plaintext copy
+switch(config)# enable secret class
+switch(config)# hostname S1
+S1(config)# ip domain-name mydomain.com
+S1(config)# username Admin privilege 15 password Engedjbe
+S1(config)# crypto key generate rsa
+S1(config)# ip ssh version 2
+S1(config)# line vty 0 15
+S1(config-line)# transport input ssh
+S1(config-line)# login local
+```
+- **Magyarázat**: SSH beállítása biztonságos távoli hozzáféréshez.
+  - `enable secret class`: Titkosított engedélyezési jelszót állít be.
+  - `hostname S1`: A készülék hostnevét `S1`-re állítja.
+  - `ip domain-name mydomain.com`: Beállítja a domain nevet.
+  - `username Admin privilege 15 password Engedjbe`: Létrehoz egy 15-ös jogosultsági szintű felhasználót a megadott jelszóval.
+  - `crypto key generate rsa`: RSA kulcsokat generál az SSH-hoz.
+  - `ip ssh version 2`: Engedélyezi az SSH 2-es verzióját.
+  - `line vty 0 15`: Belép a VTY vonal konfigurációs módba a 0-15. vonalakhoz.
+  - `transport input ssh`: Korlátozza a VTY vonalakat csak SSH hozzáférésre.
+  - `login local`: Helyi felhasználói adatbázist használ a bejelentkezéshez.
+
+### Jelszó megkerülése bootoláskor
+
+```plaintext copy
+// Bootolás közben tartsa lenyomva a "Mode" gombot
+switch: flash_init
+switch: load_helper
+switch: rename flash:config.text flash:config.old
+switch: boot
+Switch# copy config.old config.text
+Switch# copy startup-config running-config
+Sw1(config)# line console 0
+Sw1# copy running-config startup-config
+```
+- **Magyarázat**: Megkerüli az indítási konfigurációt a jelszavak helyreállításához vagy visszaállításához.
+  - `flash_init`: Inicializálja a flash fájlrendszert.
+- `load_helper`: A helper fájlokat betölti.
+ - `rename flash:config.text flash:config.old`: Átnevezi a konfigurációs fájlt, hogy ne töltődjön be.
+ - `boot`: Elindítja a switchet az indítási konfiguráció nélkül.
+ - `copy config.old config.text`: Visszaállítja a konfigurációs fájlt.
+ - `copy startup-config running-config`: Az indítási konfigurációt átmásolja a futó konfigurációba.
+ - `line console 0`: Belép a konzol vonal konfigurációs módba a jelszó visszaállításához.
+ - `copy running-config startup-config`: Elmenti az új konfigurációt.
+
+## Router konfiguráció
+
+### Jelszavak minimális hosszának beállítása
+
+```plaintext copy
+R1(config)# security passwords min-length x
+```
+- **Magyarázat**: Kikényszeríti, hogy minden jelszó legalább `x` karakter hosszú legyen.
+
+### Interfész leírásának hozzáadása
+
+```plaintext copy
+R1(config)# interface FastEthernet 0/1
+R1(config-if)# description LAN_to_admin
+```
+- **Magyarázat**: Leírást ad az interfészhez az egyszerűbb azonosítás érdekében.
+  - `interface FastEthernet 0/1`: Belép az interfész konfigurációs módba a FastEthernet 0/1-hez.
+  - `description LAN_to_admin`: A leírást `LAN_to_admin`-ra állítja.
+
+### IPv4 interfész konfiguráció
+
+```plaintext copy
+R1(config)# interface FastEthernet 0/1
+R1(config-if)# ip address 192.168.10.254 255.255.255.0
+R1(config-if)# no shutdown
+```
+- **Magyarázat**: IPv4 címet állít be az interfészen és aktiválja azt.
+  - `interface FastEthernet 0/1`: Belép az interfész konfigurációs módba a FastEthernet 0/1-hez.
+  - `ip address 192.168.10.254 255.255.255.0`: Hozzárendeli az IP-címet és az alhálózati maszkot.
+  - `no shutdown`: Aktiválja az interfészt.
+
+### IPv6 interfész konfiguráció
+
+```plaintext copy
+R1(config)# ipv6 unicast-routing
+R1(config)# interface FastEthernet 0/1
+R1(config-if)# ipv6 address 2001:DB8:ACAD:AB::1/64
+R1(config-if)# ipv6 address FE80::1 link-local
+R1(config-if)# no shutdown
+```
+- **Magyarázat**: IPv6 címet állít be az interfészen és aktiválja azt.
+  - `ipv6 unicast-routing`: Engedélyezi az IPv6 routingot.
+  - `interface FastEthernet 0/1`: Belép az interfész konfigurációs módba a FastEthernet 0/1-hez.
+  - `ipv6 address 2001:DB8:ACAD:AB::1/64`: Hozzárendeli az IPv6 címet és a prefix hosszát.
+  - `ipv6 address FE80::1 link-local`: Hozzárendeli a link-local IPv6 címet.
+  - `no shutdown`: Aktiválja az interfészt.
+
+### Statikus útvonalak konfigurálása
+
+```plaintext copy
+// Kimenő interfész használata
+R1(config)# ip route 172.16.0.0 255.255.255.0 S0/0/0
+
+// Következő ugrás IP címének használata
+R1(config)# ip route 172.16.0.0 255.255.255.0 200.0.0.1
+
+// Alapértelmezett statikus útvonal
+R1(config)# ip route 0.0.0.0 0.0.0.0 S0/0/0
+R1(config)# ip route 0.0.0.0 0.0.0.0 200.0.0.1
+```
+- **Magyarázat**: Statikus útvonalakat konfigurál a hálózati forgalom számára.
+  - `ip route 172.16.0.0 255.255.255.0 S0/0/0`: Statikus útvonalat konfigurál a kimenő interfész használatával.
+  - `ip route 172.16.0.0 255.255.255.0 200.0.0.1`: Statikus útvonalat konfigurál a következő ugrás IP címének használatával.
+  - `ip route 0.0.0.0 0.0.0.0 S0/0/0`: Alapértelmezett statikus útvonalat konfigurál a kimenő interfész használatával.
+  - `ip route 0.0.0.0 0.0.0.0 200.0.0.1`: Alapértelmezett statikus útvonalat konfigurál a következő ugrás IP címének használatával.
+
+### Jelszó megkerülése bootoláskor
+
+```plaintext copy
+// Bootolás közben nyomja meg a Ctrl+Break billentyűkombinációt
+rommon_1>: confreg 0x2142
+rommon_2>: reset
+Router# copy startup-config running-config
+R1(config)# config-register 0x2102
+R1(config)# line console 0
+R1# copy running-config startup-config
+```
+- **Magyarázat**: Megkerüli az indítási konfigurációt a jelszavak helyreállításához vagy visszaállításához.
+  - `confreg 0x2142`: Megváltoztatja a konfigurációs regisztert, hogy figyelmen kívül hagyja az indítási konfigurációt.
+  - `reset`: Újraindítja a routert.
+  - `copy startup-config running-config`: Az indítási konfigurációt átmásolja a futó konfigurációba.
+  - `config-register 0x2102`: Visszaállítja a konfigurációs regisztert az alapértelmezett értékre.
+  - `line console 0`: Belép a konzol vonal konfigurációs módba a jelszó visszaállításához.
+  - `copy running-config startup-config`: Elmenti az új konfigurációt.
+
+### DNS keresés letiltása
+
+```plaintext copy
+Router(config)# no ip domain-lookup
+```
+- **Magyarázat**: Letiltja a DNS keresést, hogy megelőzze a rosszul beírt parancsok miatti késéseket, amelyeket a rendszer hostnevekként értelmezhet.
+
+### Szinkron naplózás engedélyezése
+
+```plaintext copy
+Router(config)# line console 0
+Router(config-line)# logging synchronous
+```
+- **Magyarázat**: Biztosítja, hogy a konzolüzenetek ne szakítsák meg a parancsok bevitelét.
+  - `line console 0`: Belép a konzol vonal konfigurációs módba.
+  - `logging synchronous`: Szinkronizálja a naplóüzeneteket a parancs kimenetével.

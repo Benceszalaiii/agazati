@@ -1,0 +1,36 @@
+import { Callout, Steps } from "nextra/components";
+
+# Véletlenszerű számok generálása
+
+Ebben a leckében megtanulod, hogyan tölthetsz fel egy listát véletlenszerű számokkal
+
+<Steps>
+### Általános eset
+
+```py copy
+import random
+def fill_list(n: int, least: int, most: int) -> list[int]:
+    result: list[int] = []  # Initialize list
+    for _ in range(n):
+        result.append(random.randint(least, most))   # Append random number to list
+    return result  # Return list
+
+x: list[int] = fill_list(10, 1, 100)  # Will generate 10 numbers from 1 to 100, with duplicates
+```
+
+### Ismétlődések nélkül
+
+```py copy
+import random
+def fill_list(n: int, least: int, most: int) -> list[int]:
+    result: list[int] = []  # Initialize list
+    while len(result) < n:   # Check if we have the right amount of numbers
+        generated = random.randint(least, most)
+        if generated not in result:
+            result.append(random.randint(least, most))
+    return result
+
+x: list[int] = fill_list(10, 1, 100)  # Will generate 10 numbers from 1 to 100, without duplicates
+```
+
+</Steps>

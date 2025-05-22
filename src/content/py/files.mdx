@@ -1,0 +1,136 @@
+import { Steps, Callout, Tabs, Tab } from "nextra/components";
+
+# Fájlkezelés
+
+<Steps>
+
+### Fájl megnyitása
+
+A fájl olvasásához vagy írásához először meg kell nyitni a fájlt az `open()` függvénnyel. Ez a függvény létrehoz egy fájl objektumot, amelyet más támogató módszerek hívására használhatunk.
+
+Különböző módon nyithatunk meg egy fájlt:
+
+```py filename="example1.py" copy
+with open("file_name.txt", "r") as file:
+    # code here
+```
+
+```py filename="example2.py"
+file = open("file_name.txt", "r")
+# code here
+file.close() # Make sure you close the file after you're done, to free up memory
+
+```
+
+<Callout>
+  Example 1 will let you access the file object as long as youre inside the
+  `with` block. Example 2 will let you access the file as long as you didn't
+  close the file and you're still inside the scope of definition.{" "}
+</Callout>
+
+### Fájlkezelési módok
+
+A fájlok megnyitásakor különböző módokat használhatunk:
+
+| Mód | Jelentése  |
+| :-- | :--------: |
+| r   |  Olvasás   |
+| a   | Hozzáfűzés |
+| w   |    Írás    |
+| x   | Létrehozás |
+
+A különbség az `a` és `w` között az, hogy az `a` a tartalmat a fájl végéhez fűzi hozzá, míg a `w` felülírja a fájl tartalmát.
+
+Meghatározhatod, hogy milyen módot szeretnél használni a fájl megnyitásakor:
+
+<Tabs items={["Standard method", "with method"]}>
+<Tabs.Tab>
+```py filename="example.py" /"r"/ /"w"/ copy
+file = open("file_name.txt", "r")  # Open file in read mode
+# code here
+file.close()  # Close file
+
+file = open("file_name.txt", "w") # Open file in write mode
+
+# code here
+
+file.close() # Close file
+
+````
+</Tabs.Tab>
+<Tabs.Tab>
+```py filename="example.py" /"r"/ /"w"/ copy
+with open("file_name.txt", "r") as file:  # Open file in read mode
+    # code here
+with open("file_name.txt", "w") as file:  # Open file in write mode
+    # code here
+````
+
+</Tabs.Tab>
+</Tabs>
+
+### Metódusok
+
+<Tabs items={["Read", "Write"]}>
+<Tabs.Tab>
+#### Egész fájl olvasása
+```py filename="example.py" copy
+with open("file_name.txt", "r") as file:
+    content = file.read()
+    print(content)  # Prints the whole file
+```
+
+#### Soronkénti olvasás
+
+The `readlines()` method reads the whole file line by line and returns a list of lines.
+
+```py filename="example.py" copy
+with open("file_name.txt", "r") as file:
+    content = file.readlines()  # list[str], the file's content is separated at \n
+    for line in content:
+        print(line)  # Prints each line
+```
+
+#### Adatok szétválasztása
+
+```py filename="example.py" copy
+with open("file_name.txt", "r") as file:
+    content = file.read().split(";")  # Separate the content by ;
+    for word in content:
+        print(word)  # Prints each word
+```
+
+#### Fentiek kombinálása
+
+Hasznos, ha soronként szeretnél adatokat olvasni, miközben a tartalmat egy adott karakterrel szeretnéd szétválasztani.
+
+```py filename="example.py" copy
+with open("file_name.txt", "r") as file:
+    result = []
+    content = file.readlines()
+    for line in content:
+        result.append(line.split(";"))
+    print(result)  # Will be a list of lists, that contain the words of each line
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+#### Egész fájl írása
+
+```py filename="example.py" copy
+with open("file_name.txt", "w") as file:
+    file.write("Hello, World!")  # Writes the string to the file, overwriting the previous content
+```
+
+#### Hozzáfűzés
+
+```py filename="example.py" copy
+with open("file_name.txt", "a") as file:
+    file.write("Hello, World!")  # Appends the string to the end of the file
+    # The syntax is the same, but the mode is different
+```
+
+</Tabs.Tab>
+</Tabs>
+
+</Steps>
