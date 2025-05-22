@@ -6,6 +6,7 @@ import { getPageMap } from "nextra/page-map";
 import "nextra-theme-docs/style.css";
 import Link from "next/link";
 import { Metadata } from "next";
+import { AuroraText } from "@/components/magicui/aurora-text";
 const banner = (
   <Banner storageKey="AGAZATI_BANNER_DISMISSED">
     Frissített felület ✨ Hozzáférés mindenkinek{" "}
@@ -13,7 +14,7 @@ const banner = (
 );
 const navbar = (
   <Navbar
-    logo={<b>Ágazati</b>}
+    logo={<AuroraText colors={["#22c55e", "#6d28d9", "#059669", "#9333ea"]}>Khrone Ágazati</AuroraText>}
     // ... Your additional navbar options
   />
 );
