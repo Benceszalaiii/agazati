@@ -9,6 +9,7 @@ import { Metadata } from "next";
 import { AuroraText } from "@/components/magicui/aurora-text";
 import { Analytics } from "@vercel/analytics/next";
 import { GoogleAnalytics } from "@next/third-parties/google";
+
 const banner = (
   <Banner storageKey="AGAZATI_BANNER_DISMISSED">
     Frissített felület ✨ Hozzáférés mindenkinek{" "}
@@ -64,6 +65,12 @@ export default async function RootLayout({
         }}
         // ... Your additional head options
       >
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-title" content="Khrone Ágazati" />
         <link
           rel="icon"
           href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>"
@@ -71,11 +78,19 @@ export default async function RootLayout({
         {/* Your additional tags should be passed as `children` of `<Head>` element */}
       </Head>
       <body>
+      <div className="fixed top-0 left-0 w-full h-full -z-10 md:bg-[url('../../public/background-light.svg')] opacity-50 bg-[url(../../public/background-light.svg)] dark:bg-[url(../../public/background.svg)] bg-cover bg-no-repeat bg-bottom-left md:dark:bg-left;
+">
+  </div>
         <Analytics />
         <GoogleAnalytics gaId="G-D3XNH4Q8XG" />
         <Layout
           banner={banner}
           navbar={navbar}
+          themeSwitch={{
+            light: "Világos mód",
+            dark: "Sötét mód",
+            system: "Rendszer",
+          }}
           editLink={false}
           toc={{
             backToTop: false,
