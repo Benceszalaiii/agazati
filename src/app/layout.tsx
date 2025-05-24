@@ -1,4 +1,4 @@
-"use server"
+"use server";
 import "./globals.css";
 import { Footer, Layout, Navbar } from "nextra-theme-docs";
 import { Banner, Head } from "nextra/components";
@@ -7,6 +7,8 @@ import "nextra-theme-docs/style.css";
 import Link from "next/link";
 import { Metadata } from "next";
 import { AuroraText } from "@/components/magicui/aurora-text";
+import { Analytics } from "@vercel/analytics/next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 const banner = (
   <Banner storageKey="AGAZATI_BANNER_DISMISSED">
     Frissített felület ✨ Hozzáférés mindenkinek{" "}
@@ -14,7 +16,11 @@ const banner = (
 );
 const navbar = (
   <Navbar
-    logo={<AuroraText colors={["#22c55e", "#6d28d9", "#059669", "#9333ea"]}>Khrone Ágazati</AuroraText>}
+    logo={
+      <AuroraText colors={["#22c55e", "#6d28d9", "#059669", "#9333ea"]}>
+        Khrone Ágazati
+      </AuroraText>
+    }
     // ... Your additional navbar options
   />
 );
@@ -24,7 +30,7 @@ const metadata: Metadata = {
     template: "%s | Khrone",
   },
 };
-export async function generateMetadata(): Promise<Metadata>{
+export async function generateMetadata(): Promise<Metadata> {
   return metadata;
 }
 const footer = (
@@ -36,15 +42,13 @@ const footer = (
     >
       Khrone
     </Link>
-    
   </Footer>
-);  
+);
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html
       // Not required, but good for SEO
@@ -67,6 +71,8 @@ export default async function RootLayout({
         {/* Your additional tags should be passed as `children` of `<Head>` element */}
       </Head>
       <body>
+        <Analytics />
+        <GoogleAnalytics gaId="G-D3XNH4Q8XG" />
         <Layout
           banner={banner}
           navbar={navbar}
