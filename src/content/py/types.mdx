@@ -17,6 +17,7 @@ flowchart TD
 ```
 
 ## int (Egész szám) [#int]
+
     Az egész számok a törtrész nélküli számokat képviselik. Lehetnek pozitívak, negatívak vagy nulla.
 
     ```py filename="example.py" /int/2,4
@@ -24,15 +25,18 @@ flowchart TD
         x = int(9.61) # Egy lebegőpontos számot átalakíthatsz egész számmá
         x: int  # Tipusdefiníció az egész számra
     ```
+
 ### Gyakran használt metódusok
 
 #### abs()
+
 ```py filename="example.py" /abs/
     x = abs(-7.25)  #  x: 7.25
-    
+
 ```
 
 ## float (Lebegőpontos szám) [#float]
+
     A lebegőpontos számok a valós számokat képviselik tizedes ponttal.
 
     Az egész számokkal ellentétben a lebegőpontos számok korlátozott pontossággal rendelkeznek, a számítógépes memóriában való ábrázolás módja miatt.
@@ -47,7 +51,9 @@ flowchart TD
 ### Gyakran használt metódusok
 
 #### round()
+
 Egy számot egy megadott tizedesjegyig kerekít.
+
 ```py filename="example.py" /round/1-2 /ceil/1 /floor/1
     x = round(3.14159265)   #  x: 3
     x = round(3.14159265, 2) #  x: 3.14
@@ -76,7 +82,9 @@ Egy számot egy megadott tizedesjegyig kerekít.
     ```
 
 ### Gyakran használt metódusok
+
 #### len()
+
 Visszatér a string karaktereinek számával (beleértve a szóközöket is).
 
 ```py filename="example.py" /len/
@@ -85,6 +93,7 @@ Visszatér a string karaktereinek számával (beleértve a szóközöket is).
 ```
 
 #### split()
+
 Egy stringet listára bont egy megadott elválasztó alapján. Ha nincs megadva elválasztó, akkor a string szóközöknél lesz bontva.
 
 ```py filename="example.py" /split/
@@ -94,6 +103,7 @@ Egy stringet listára bont egy megadott elválasztó alapján. Ha nincs megadva 
 ```
 
 #### replace()
+
 Egy alstringet egy másik alstringre cserél.
 
 Két argumentumot vesz fel: az alstringet, amit cserélni kell, és az alstringet, amire cserélni kell.
@@ -103,7 +113,7 @@ Két argumentumot vesz fel: az alstringet, amit cserélni kell, és az alstringe
     y = x.replace("4", "for")  # y: "Cukikák forever"
 ```
 
-További információkért a string metódusokról, lásd [Class - Fájlok olvasása](/docs/hu/py/class/read-files).
+További információkért a string metódusokról, lásd [Class - Fájlok olvasása](/py/class/read-files).
 
 ### F-stringek [#f-string]
 
@@ -138,6 +148,7 @@ Számok formázására is használhatod az f-stringeket.
 ```
 
 ## bool (Boolean) [#bool]
+
 A Pythonban a boolean értékek a két igazságértéket képviselik: `True` és `False`.
 
 ```py
@@ -151,7 +162,7 @@ Más típusok boolean értékekre konvertálódnak, ha kifejezésben használjá
     # egy számnál (float, int, complex) 0 jelenti a False-t és minden más érték True
     0 == False # True,   0 False
     1 == False  # False, 1 nem False
-    
+
     # Egy string False lesz, ha üres, különben True lesz
     "" == False # True,             "" False
     "Cukikák" == False  # False,    "" nem False
@@ -220,6 +231,7 @@ x.remove(3)  # x: [10, 2, 4, 5, 6]
 ### Gyakran használt metódusok
 
 #### append()
+
 Elem hozzáadása a lista végéhez.
 
 ```py filename="example.py" /append/
@@ -228,6 +240,7 @@ x.append(4)  # x: [1, 2, 3, 4]
 ```
 
 #### insert()
+
 Elem hozzáadása egy megadott pozícióhoz a listában.
 
 ```py filename="example.py" /insert/
@@ -236,6 +249,7 @@ x.insert(2, 3)  # x: [1, 2, 3, 4]
 ```
 
 #### remove()
+
 Az első előfordulás eltávolítása a listából.
 
 ```py filename="example.py" /remove/
@@ -244,6 +258,7 @@ x.remove(2)  # x: [1, 3, 2]
 ```
 
 #### pop()
+
 Az utolsó elem eltávolítása és visszatérése.
 
 ```py filename="example.py" /pop/
@@ -252,6 +267,7 @@ y = x.pop()  # y: 3, x: [1, 2]
 ```
 
 #### sort()
+
 Lista elemeinek rendezése.
 
 ```py filename="example.py" /sort/
@@ -260,6 +276,7 @@ x.sort()  # x: [1, 2, 3]
 ```
 
 #### reverse()
+
 Lista elemeinek megfordítása.
 
 ```py filename="example.py" /reverse/
@@ -302,6 +319,7 @@ x["age"] = 30  # x: {"name": "Alice", "age": 30, "city": "New York"}
 ### Gyakran használt metódusok
 
 #### keys()
+
 Visszatér a szótár összes kulcsával.
 
 ```py filename="example.py" /keys/
@@ -310,6 +328,7 @@ keys = x.keys()  # keys: dict_keys(['name', 'age', 'city'])
 ```
 
 #### values()
+
 Visszatér a szótár összes értékével.
 
 ```py filename="example.py" /values/
@@ -318,6 +337,7 @@ values = x.values()  # values: dict_values(['Alice', 25, 'New York'])
 ```
 
 #### items()
+
 Visszatér a szótár összes kulcs-érték párjával.
 
 ```py filename="example.py" /items/
@@ -326,6 +346,7 @@ items = x.items()  # items: dict_items([('name', 'Alice'), ('age', 25), ('city',
 ```
 
 #### get()
+
 Visszatér egy értékkel egy adott kulcs alapján. Ha a kulcs nem létezik, akkor egy megadott alapértelmezett értékkel tér vissza.
 
 ```py filename="example.py" /get/
@@ -335,6 +356,7 @@ country = x.get("country", "USA")  # Kimenet: "USA"
 ```
 
 #### update()
+
 Egy másik szótár elemeivel bővíti a szótárat.
 
 ```py filename="example.py" /update/
@@ -344,6 +366,7 @@ x.update(y)  # x: {"name": "Alice", "age": 30, "city": "New York"}
 ```
 
 #### pop()
+
 Eltávolít egy kulcs-érték párt és visszatér az értékkel.
 
 ```py filename="example.py" /pop/
@@ -401,6 +424,7 @@ y = x + (4, 5)  # y: (1, 2, 3, 4, 5)
 ódusok
 
 #### count()
+
 Visszatér az adott elem előfordulásainak számával a tuple-ben.
 
 ```py filename="example.py" /count/
@@ -409,6 +433,7 @@ count_2 = x.count(2)  # Kimenet: 3
 ```
 
 #### index()
+
 Visszatér az adott elem első előfordulásának indexével a tuple-ben.
 
 ```py filename="example.py" /index/
@@ -461,6 +486,7 @@ x.remove(2)  # x: {1, 3, 4}
 ### Gyakran használt metódusok
 
 #### add()
+
 Elem hozzáadása a halmazhoz.
 
 ```py filename="example.py" /add/
@@ -469,6 +495,7 @@ x.add(4)  # x: {1, 2, 3, 4}
 ```
 
 #### remove()
+
 Elem eltávolítása a halmazból.
 
 ```py filename="example.py" /remove/
@@ -477,6 +504,7 @@ x.remove(2)  # x: {1, 3}
 ```
 
 #### union()
+
 Két halmaz egyesítése.
 
 ```py filename="example.py" /union/
@@ -486,6 +514,7 @@ z = x.union(y)  # z: {1, 2, 3, 4, 5}
 ```
 
 #### intersection()
+
 Két halmaz metszetének létrehozása.
 
 ```py filename="example.py" /intersection/
@@ -495,6 +524,7 @@ z = x.intersection(y)  # z: {2, 3}
 ```
 
 #### difference()
+
 Két halmaz különbségének létrehozása.
 
 ```py filename="example.py" /difference/
@@ -536,6 +566,7 @@ for elem in x:
 A frozensetek rendelkeznek a halmazok összes metódusával, kivéve a módosítási metódusokat (`add()`, `remove()`, stb.), mivel a frozensetek változtathatatlanok.
 
 #### union()
+
 Két frozenset egyesítése.
 
 ```py filename="example.py" /union/
@@ -545,6 +576,7 @@ z = x.union(y)  # z: frozenset([1, 2, 3, 4, 5])
 ```
 
 #### intersection()
+
 Két frozenset metszetének létrehozása.
 
 ```py filename="example.py" /intersection/
@@ -554,6 +586,7 @@ z = x.intersection(y)  # z: frozenset([2, 3])
 ```
 
 #### difference()
+
 Két frozenset különbségének létrehozása.
 
 ```py filename="example.py" /difference/
