@@ -9,7 +9,7 @@ import { Metadata } from "next";
 import { AuroraText } from "@/components/magicui/aurora-text";
 import { Analytics } from "@vercel/analytics/next";
 import { GoogleAnalytics } from "@next/third-parties/google";
-
+import { SpeedInsights } from "@vercel/speed-insights/next";
 const banner = (
   <Banner storageKey="AGAZATI_BANNER_DISMISSED">
     Frissített felület ✨ Hozzáférés mindenkinek{" "}
@@ -78,10 +78,12 @@ export default async function RootLayout({
         {/* Your additional tags should be passed as `children` of `<Head>` element */}
       </Head>
       <body>
-      <div className="fixed top-0 left-0 w-full h-full -z-10 md:bg-[url('../../public/background-light.svg')] opacity-50 bg-[url(../../public/background-light.svg)] dark:bg-[url(../../public/background.svg)] bg-cover bg-no-repeat bg-bottom-left md:dark:bg-left;
-">
-  </div>
+        <div
+          className="fixed top-0 left-0 w-full h-full -z-10 md:bg-[url('../../public/background-light.svg')] opacity-50 bg-[url(../../public/background-light.svg)] dark:bg-[url(../../public/background.svg)] bg-cover bg-no-repeat bg-bottom-left md:dark:bg-left;
+"
+        ></div>
         <Analytics />
+        <SpeedInsights />
         <GoogleAnalytics gaId="G-D3XNH4Q8XG" />
         <Layout
           banner={banner}
