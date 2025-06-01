@@ -1,0 +1,479 @@
+## Jelszavazás
+
+**Minimális jelszó hossz**
+
+```plaintext
+R1(config)#security passwords min-length 0-16
+```
+
+**Bejelentkezési próbálkozások korlátozása**
+(2 perces tiltás 1 percen belül 5 rossz próba után)
+
+```plaintext
+R1(config)#login block-for 120 attempts 5 within 60
+```
+
+**Felhasználói EXEC mód jelszó**
+
+```plaintext
+R1(config)#line con 0
+R1(config-line)#password cisco
+R1(config-line)#login
+```
+
+**Privilegizált EXEC mód titkosítatlan és titkosított jelszó**
+
+```plaintext
+R1(config)#enable password cisco
+R1(config)#enable secret class
+```
+
+**Banner nap üzenete és bejelentkezési üzenet**
+
+```plaintext
+R1(config-subif)#banner motd üzenet
+R1(config-subif)#banner login üzenet
+```
+
+**Titkosítás**
+
+```plaintext
+R1(config)#service password-encryption
+```
+
+
+---
+
+## Konfigurációs fájlok
+
+**Konfiguráció mentés**
+
+```plaintext
+R1#copy running-config startup-config
+R1#copy running-config tftp
+```
+
+**Konfiguráció törlés**
+
+```plaintext
+R1#erase startup-config
+R1#reload
+```
+
+Megjelenítés:
+
+- `R1#show running-config` *(RAM-ban lévő futó konfiguráció)*
+- `R1#show startup-config` *(NVRAM-ban tárolt konfiguráció)*
+
+---
+
+## Domain nevek
+
+**Domain név megadás**
+
+```plaintext
+R1(config)#ip domain-name domain.hu
+```
+
+**Domain név feloldás tiltása**
+
+```plaintext
+R1(config)#no ip domain-lookup
+```
+
+
+---
+
+## Távoli hozzáférés (SSH)
+
+```plaintext
+R1(config)#ip domain-name domain.hu
+R1(config)#crypto key generate rsa
+R1(config)#ip ssh version 1 | 2
+R1(config)#username admin password|secret jelszo
+R1(config)#line vty 0 15
+R1(config-line)#login local
+R1(config-line)#transport input ssh | telnet | all 
+```
+
+- `R1#show ssh` *(ssh állapot lekérdezése)*
+
+---
+
+## IP címzés, DHCP
+
+**Megjegyzés hozzáadása interfacehez**
+
+```plaintext
+R1(config-if)#description LAN-kapcsolat
+```
+
+**Alinterface, nativ alinterface**
+
+```plaintext
+R1(config)#int g0/1.90
+R1(config-subif)#encapsulation dot1q 90 | native
+```
+
+**Loopback interface beállítás**
+
+```plaintext
+R1(config)#interface loopback 0
+R1(config-if)#ip address 200.0.0.1 255.255.255.255    
+```
+
+**IPv4 cím interface-en statikusan és dinamikusan**
+
+```plaintext
+R1(config)#int g0/0
+R1(config-if)#ip address 192.168.10.1 255.255.255.0 | dhcp
+```
+
+**IPv6 cím interface-en statikusan és dinamikusan**
+
+```plaintext
+R1(config)#ipv6 unicast-routing
+R1(config)#int g0/0
+R1(config-if)#ipv6 enable
+R1(config-if)#ipv6 address 2001:470:1:1::1/64 | dhcp / autoconfig
+```
+
+**Serial Port**
+
+```plaintext
+R1(config)#interface Serial 0/0/0
+R1(config-if)#ip address 193.155.145.2 255.255.255.0
+R1(config-if)#clock rate 64000
+```
+
+**DHCPv4 szerver beállítása**
+
+```plaintext
+R1(config)#ip dhcp excluded-address 192.168.0.1 192.168.0.10
+R1(config)#ip dhcp pool lan1
+R1(config-dhcp)#network 192.168.0.0 255.255.255.0
+R1(config-dhcp)#default-router 192.168.0.1
+R1(config-dhcp)#dns-server 1.2.3.4
+R1(config-dhcp)#lease 1 12 30   (nap óra perc formátum)
+R1(config-dhcp)#domain-name teszt.hu
+```
+
+**DHCPv6 szerver beállítása (Stateful)**
+
+```plaintext
+R1(config)#ipv6 dhcp pool lan1
+R1(config-dhcpv6)#address prefix 2001::/64
+R1(config-dhcpv6)#dns-server AA::BB
+R1(config-dhcpv6)#domain-name teszt.hu
+# Pool interfacehez rendelés:
+R1(config-if)#ipv6 dhcp server lan1
+```
+
+**DHCP csomag átirányítása szerverről más alhálózatra**
+
+```plaintext
+R1(config-if)#ip helper-address 192.168.10.1
+```
+
+Megjelenítés:
+
+- `R1#show ip dhcp binding` *(DHCP szerver által kiadott címek)*
+- `R1#show interfaces` *(Interfészek állapotai)*
+- `R1#show ip int brief`
+
+---
+
+## Statikus forgalomirányítás
+
+**Statikus útvonalak IPv4:**
+
+```plaintext
+R1(config)#ip route 192.168.52.0 255.255.255.0 192.168.1.2 | s0/0/0
+```
+
+**Lebegő statikus útvonal IPv4:**
+
+```plaintext
+R1(config)#ip route 10.0.0.0 255.255.255.0 s0/0/0 150
+```
+
+**Alapértelmezett út megadása IPv4:**
+
+```plaintext
+R1(config)#ip route 0.0.0.0 0.0.0.0 köv_ugrás ip címe | kiküldő interface
+```
+
+**IPv6 statikus útvonal megadása:**
+
+```plaintext
+R1(config)#ipv6 route 2001:470:1:1::/64 s0/0/0 | 2001:470:1:2::1
+```
+
+**IPv6 lebegő statikus útvonal megadása:**
+
+```plaintext
+R1(config)#ipv6 route 2001:470:1:1::/64 s0/0/0 151
+```
+
+**IPv6 alapértelmezett útvonal megadása:**
+
+```plaintext
+R1(config)#ipv6 route ::/0 s0/0/0
+```
+
+Megjelenítés:
+
+- `R1#show ip route`
+- `R1#show ipv6 route`
+
+---
+
+## Dinamikus forgalomirányítás
+
+**RIP**
+
+```plaintext
+R1(config)#router rip
+R1(config-router)#no auto-summary
+R1(config-router)#network 195.220.123.0
+# Ha egy interfészen nem akarunk küldeni frissítéseket, csak fogadni:
+R1(config-router)#passive-interface Fa0/0
+# Nem osztályos címeknél:
+R1(config-router)#version 2
+# RIP verzió beállítás interface-en:
+R1(config-if)#ip rip send version 2
+R1(config-if)#ip rip receive version 2
+# RIP alapértelmezett út hirdetése:
+R1(config-router)#default-information originate
+```
+
+**OSPF**
+
+```plaintext
+R1(config)#router ospf 1-65535   (folyamat azonosító)
+R1(config-router)#network 195.220.123.0 0.0.0.255 area 0
+R1(config-router)#router-id 200.0.0.1
+# Interfész prioritásának megadása (ha 0, nem vesz részt a DR/BDR választásban):
+R1(config-if)#ip ospf priority 100
+# Költségérték módosítása:
+R1(config-if)#ip ospf cost 100   (az érték 1-255 lehet)
+```
+
+**OSPFv3**
+
+```plaintext
+R1(config)#ipv6 router ospf 1
+R1(config-router)#router-id 1.1.1.1   (ez nem ip cím, hanem process azonosító)
+R1(config-router)#exit
+R1(config)#int fa 0/1
+R1(config-if)#ipv6 ospf 1 area 0
+```
+
+Megjelenítés:
+
+- `R1#show ip ospf interface`
+- `R1#show ip ospf neighbour [detail]`
+
+---
+
+## Hozzáférési listák (ACL)
+
+**Normál ACL**
+
+```plaintext
+R1(config)#access-list szám permit|deny host_ip|ip_tartomány wildcard maszkja
+# Normál ACL a 193.225.10.0/24 célhálózathoz enged:
+R1(config)#access-list 1 permit 193.225.10.0 0.0.0.255
+# Normál ACL egy számítógép tiltásához:
+R1(config)#access-list 1 deny host 195.140.100.5
+```
+
+**Kiterjesztett ACL**
+
+```plaintext
+R1(config)#access-list szám permit|deny protokoll forrás_ip reverse-maszk cél_ip reverse-maszk
+# Tiltjuk a 195.220.0.0/16 hálózat felől a HTTP (80-as port) kéréseket bármilyen célhálózat felé:
+R1(config)#access-list 101 deny tcp 195.220.0.0 0.0.255.255 0.0.0.0 0.0.0.0 eq 80
+```
+
+Portok megadása:
+
+- eq – ha egy portot adunk meg (equal)
+- ne – ha nem azt a portot akarjuk (not equal)
+- lt – ha megadott portnál kisebbeket akarjuk
+- gt – ha megadott portnál nagyobbakat akarjuk
+- range x to y – ha portszámok tartományát akarjuk
+
+**Nevesített ACL**
+
+```plaintext
+R1(config)#ip access-list standard ACL-IN
+R1(config)#ip access-list extended ACL-OUT
+R1(config-ext-nacl)#permit icmp any any
+```
+
+**ACL interfészhez rendelése (figyelj oda az in és out-ra)**
+
+```plaintext
+R1(config)#interface Serial 0/0/0
+R1(config-if)#ip access-group 1 out | in
+```
+
+**ACL leírás megadása**
+
+```plaintext
+R1(config)#access-list 1 remark   (ez tilt mindent)
+```
+
+Megjelenítés:
+
+- `R1#show access-lists`
+
+---
+
+## Címfordítás (NAT)
+
+**Alapértelmezett ip route hogy NATon menjenek a csomagok**
+
+```plaintext
+ip route 0.0.0.0 0.0.0.0 ISP
+```
+
+**Belső, külső interface**
+
+```plaintext
+R1(config-if)#ip nat inside
+R1(config-if)#ip nat outside
+```
+
+**Statikus NAT**
+
+```plaintext
+R1(config)#ip nat inside source static 10.10.10.1 209.21.34.11
+```
+
+**Dinamikus NAT**
+
+```plaintext
+R1(config)#ip nat pool public_access 209.165.200.242 209.165.200.253 netmask 255.255.255.224
+R1(config)#access-list 1 permit 192.168.123.0 0.0.0.255
+R1(config)#ip nat inside source list 1 pool public_access
+```
+
+**PAT**
+
+```plaintext
+R2(config)#ip nat inside source list 1 interface serial 0/1/1 overload
+R2(config)#access-list 1 permit 192.168.0.0 0.0.255.255
+R2(config)#interface serial0/1/0
+R2(config-if)#ip nat inside
+R2(config-if)#exit
+R2(config)#interface Serial0/1/1
+R2(config-if)#ip nat outside
+```
+
+**PAT Pool**
+
+```plaintext
+R2(config)#ip nat pool NAT-POOL2 209.165.200.226 209.165.200.240 netmask 255.255.255.224
+R2(config)#access-list 1 permit 192.168.0.0 0.0.255.255
+R2(config)#ip nat inside source list 1 pool NAT-POOL2 overload
+R2(config)#interface serial0/1/0
+R2(config-if)#ip nat inside
+R2(config-if)#exit
+R2(config)#interface serial0/1/1
+R2(config-if)#ip nat outside
+```
+
+Megjelenítés:
+
+- `R1#show ip nat translations` *(IP NAT alapú címfordítással kapcsolatos információk)*
+- `R1#show ip nat statistics` *(Nat kiküldött csomagok statisztikája)*
+
+---
+
+## GRE Tunnel (VPN)
+
+1. **Biztonsági csomag engedélyezése (ha kell)**
+```plaintext
+license boot module c2900 technology-package securityk9
+wr
+reload
+```
+
+2. **IP címek kiosztása**
+```plaintext
+#R1
+int tunel1
+tunnel source g0/0
+tunnel destination 30.30.30.2
+
+#R2
+int tunnel1
+ip address 10.10.10.2 255.255.255.0
+tunnel source g0/1
+tunnel destination 20.20.20.2
+```
+
+3. **Default statikus útvonalak definiálása**
+```plaintext
+#R1
+ip route 0.0.0.0 0.0.0.0 20.20.20.1
+ip route 192.168.2.0 255.255.255.0 10.10.10.2
+
+#R2
+ip route 0.0.0.0 0.0.0.0 30.30.30.1
+ip route 192.168.1.0 255.255.255.0 10.10.10.1
+```
+
+4. **IKE ISAKMP kulcs létrehozása**
+```plaintext
+crypto isakmp policy 10
+encr aes 256
+hash md5
+authentication pre-share
+group 5
+crypto isakmp key hajni123 address 30.30.30.2 
+```
+
+5. **ACL konfiguráció**
+```plaintext
+#R1
+access-list 130 permit ip 192.168.1.0 0.0.0.255 192.168.2.0 0.0.0.255
+
+#R2
+access-list 130 permit ip 192.168.2.0 0.0.0.255 192.168.1.0 0.0.0.255    
+```
+
+6. **IKE IPsec**
+```plaintext
+crypto ipsec transform-set VPN-SET esp-aes 256 esp-sha-hmac
+crypto map VPN-MAP 10 ipsec-isakmp
+set peer 30.30.30.2
+set transform-set VPN-SET
+match address 130
+```
+
+7. **Interface hozzárendelés (mindkét rotueren)**
+```plaintext
+int g0/0
+crypto map VPN-MAP
+```
+
+
+---
+
+## HSRP
+
+```plaintext
+R1(config)#int s0/0/0
+R1(config-if)#ip add 10.0.0.20 255.255.255.0
+R1(config-if)#standy version 2
+R1(config-if)#standby 1 ip 10.0.0.1
+R1(config-if)#standby 1 priority 110   (alapértelmezett 100)
+R1(config-if)#standby 1 name HSRP-example
+R1(config-if)#standy 1 preempt
+```
+
+- `R1#show standby brief`
+

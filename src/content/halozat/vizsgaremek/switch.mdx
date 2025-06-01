@@ -1,0 +1,117 @@
+
+## Jelszavazás
+
+Felhasználói EXEC mód jelszó
+
+```plaintext
+Switch(config)#line con 0
+Switch(config-line)#password jelszó
+Switch(config-line)#login
+```
+
+Privilegizált EXEC mód
+
+```plaintext
+Switch(config)#enable secret jelszó
+```
+
+Titkosítás
+
+```plaintext
+Switch(config)#service password-encryption
+```
+
+Banner üzenetek
+
+```plaintext
+Switch(config)#banner motd üzenet
+```
+
+---
+
+## Konfigurációs fájlok 
+
+Konfiguráció mentés
+
+```plaintext
+Switch#copy running-config startup-config
+Switch#copy running-config tftp
+```
+
+Konfiguráció törlés
+
+```plaintext
+Switch#erase startup-config
+Switch#erase vlan.dat
+Switch#reload
+```
+
+---
+
+## IP címzés
+
+Alapértelmezett átjáró
+
+```plaintext
+Switch(config)#ip default-gateway 192.168.1.1
+```
+
+Domain szerver megadása
+
+```plaintext
+Switch(config)#ip name-server 10.1.1.1
+```
+
+---
+
+## Távoli hozzáférés
+
+```plaintext
+Switch(config)#ip domain-name domain.hu
+Switch(config)#crypto key generate rsa
+Switch(config)#ip ssh version 1 | 2
+Switch(config)#username admin password|secret jelszo
+Switch(config)#line vty 0 15
+Switch(config-line)#login local
+Switch(config-line)#transport input ssh | telnet | all
+```
+
+---
+
+## Domain nevek 
+
+Domain név megadás
+
+```plaintext
+Switch(config)#ip domain-name domain.hu
+```
+
+Domain név feloldás letiltás
+
+```plaintext
+Switch(config)#no ip domain-lookup
+```
+
+---
+
+## Portbiztonság konfigurálása 
+
+MAC cím megjegyzés
+
+```plaintext
+Switch(config)#int fa0/1
+Switch(config-if)#switchport mode access
+Switch(config-if)#switchport port-security
+Switch(config-if)#switchport port-security mac-address sticky
+```
+
+---
+
+## Show parancsok 
+
+```plaintext
+Switch#show ip int brief
+Switch#show int status
+Switch#show vlan brief
+Switch#show etherchannel summary
+```
