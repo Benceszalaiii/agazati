@@ -13,7 +13,7 @@ const meta: MetaRecord = {
   },
 donate: {
 type: 'page',
-title: 'Show support',
+title: 'Show love💜',
 href: 'https://checkout.revolut.com/pay/9b2b4f6e-4f70-46a1-9a2c-426a699f19ab'
 },
   halozat: "Hálózat",
