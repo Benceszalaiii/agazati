@@ -11,6 +11,11 @@ const meta: MetaRecord = {
     },
     title: "Ágazati felkészülés | Khrone",
   },
+  ancsruf: {
+    title: "ANCSRUFÉK FC",
+    type: "page",
+    href: "https://instagram.com/ancsrufek_fc",
+  },
 donate: {
 type: 'page',
 title: 'Show love💜',
