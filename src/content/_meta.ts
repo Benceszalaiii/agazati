@@ -14,7 +14,7 @@ const meta: MetaRecord = {
   ancsruf: {
     title: "ANCSRUFÉK FC",
     type: "page",
-    href: "https://instagram.com/ancsrufek_fc",
+    href: "https://instagram.com/ancsrufekfc",
   },
 donate: {
 type: 'page',
