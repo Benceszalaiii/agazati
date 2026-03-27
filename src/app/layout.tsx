@@ -10,6 +10,9 @@ import { AuroraText } from "@/components/magicui/aurora-text";
 import { Analytics } from "@vercel/analytics/next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { redirect } from 'next/navigation'
+
+
 const banner = (
   <Banner storageKey="AGAZATI_BANNER_DISMISSED">
     Frissített felület ✨ Hozzáférés mindenkinek{" "}
@@ -50,6 +53,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+return redirect('https://11carclub.eu');
   return (
     <html
       // Not required, but good for SEO
